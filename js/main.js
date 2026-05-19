@@ -2,7 +2,9 @@ const menuToggle = document.querySelector("#menuToggle");
 const mainNav = document.querySelector("#mainNav");
 const contactForm = document.querySelector("#contactForm");
 const heroSlides = document.querySelectorAll(".hero-slide");
-const heroIndicators = document.querySelectorAll(".hero-indicator");
+const heroPrev = document.querySelector(".hero-arrow-prev");
+const heroNext = document.querySelector(".hero-arrow-next");
+const heroMedia = document.querySelector(".hero-media");
 const heroTitle = document.querySelector("#heroTitle");
 const heroDescription = document.querySelector("#heroDescription");
 const header = document.querySelector(".header");
@@ -38,6 +40,15 @@ const heroMessages = [
     description:
       "A Chácara do Cris valoriza cada detalhe da celebração para criar experiências autênticas e emocionantes."
   }
+];
+
+const heroImages = [
+  "./assets/hero-slide-evento-varanda.png",
+  "./assets/hero-slide-celebre-amor.png",
+  "./assets/hero-slide-3.png",
+  "./assets/hero-slide-4.png",
+  "./assets/hero-slide-5.png",
+  "./assets/hero-slide-6.png"
 ];
 
 if (menuToggle && mainNav) {
@@ -121,6 +132,7 @@ if (contactForm) {
 
 if (heroSlides.length > 1) {
   let currentSlide = 0;
+  let heroTimer;
 
   const updateHeroMessage = (slideIndex) => {
     if (!heroTitle || !heroDescription || !heroMessages[slideIndex]) {
@@ -133,18 +145,109 @@ if (heroSlides.length > 1) {
 
   updateHeroMessage(currentSlide);
 
-  setInterval(() => {
+  const showHeroSlide = (slideIndex) => {
     heroSlides[currentSlide].classList.remove("active");
-    if (heroIndicators[currentSlide]) {
-      heroIndicators[currentSlide].classList.remove("active");
-    }
-    currentSlide = (currentSlide + 1) % heroSlides.length;
+
+    currentSlide = (slideIndex + heroSlides.length) % heroSlides.length;
     heroSlides[currentSlide].classList.add("active");
-    if (heroIndicators[currentSlide]) {
-      heroIndicators[currentSlide].classList.add("active");
-    }
     updateHeroMessage(currentSlide);
-  }, 4500);
+  };
+
+  const startHeroTimer = () => {
+    window.clearInterval(heroTimer);
+    heroTimer = window.setInterval(() => {
+      showHeroSlide((currentSlide + 1) % heroSlides.length);
+    }, 6500);
+  };
+
+  if (heroPrev) {
+    heroPrev.addEventListener("click", () => {
+      showHeroSlide(currentSlide - 1);
+      startHeroTimer();
+    });
+  }
+
+  if (heroNext) {
+    heroNext.addEventListener("click", () => {
+      showHeroSlide(currentSlide + 1);
+      startHeroTimer();
+    });
+  }
+
+  startHeroTimer();
+}
+
+const galleryImages = document.querySelectorAll(".photo img");
+
+if (heroMedia || galleryImages.length > 0) {
+  const modal = document.createElement("div");
+  modal.className = "photo-modal";
+  modal.setAttribute("aria-hidden", "true");
+  modal.innerHTML = `
+    <button class="photo-modal-close" type="button" aria-label="Fechar visualização da foto">×</button>
+    <img class="photo-modal-img" alt="">
+  `;
+  document.body.appendChild(modal);
+
+  const modalImage = modal.querySelector(".photo-modal-img");
+  const modalClose = modal.querySelector(".photo-modal-close");
+
+  const openPhotoModal = (src, alt = "Foto ampliada") => {
+    if (!modalImage || !src) {
+      return;
+    }
+
+    modalImage.src = src;
+    modalImage.alt = alt;
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
+  };
+
+  const closePhotoModal = () => {
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");
+    if (modalImage) {
+      modalImage.removeAttribute("src");
+    }
+  };
+
+  if (heroMedia) {
+    heroMedia.addEventListener("click", (event) => {
+      if (event.target.closest(".hero-arrow")) {
+        return;
+      }
+
+      openPhotoModal(heroImages[currentSlide], heroMessages[currentSlide]?.title);
+    });
+
+    heroMedia.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openPhotoModal(heroImages[currentSlide], heroMessages[currentSlide]?.title);
+      }
+    });
+  }
+
+  galleryImages.forEach((image) => {
+    image.addEventListener("click", () => {
+      openPhotoModal(image.currentSrc || image.src, image.alt);
+    });
+  });
+
+  modalClose?.addEventListener("click", closePhotoModal);
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      closePhotoModal();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && modal.classList.contains("open")) {
+      closePhotoModal();
+    }
+  });
 }
 
 const revealItems = document.querySelectorAll(".reveal");
