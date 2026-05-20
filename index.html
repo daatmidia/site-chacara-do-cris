@@ -97,10 +97,18 @@
   </div>
   <header class="header">
     <div class="container nav-wrap">
-      <a class="brand" href="#inicio" aria-label="Chácara do Cris — início">
-        <img class="brand-logo" src="./assets/logo-chacara-do-cris.png" alt="Chácara do Cris" width="116" height="116">
-      </a>
-      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">Menu</button>
+      <div class="nav-brand-group">
+        <a class="brand" href="#inicio" aria-label="Chácara do Cris — início">
+          <img class="brand-logo" src="./assets/logo-chacara-do-cris.png" alt="Chácara do Cris" width="116" height="116">
+        </a>
+        <a class="nav-mobile-home" href="#inicio">Início</a>
+      </div>
+      <span class="nav-mobile-bar">
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mainNav">
+          <span class="menu-toggle-icon" aria-hidden="true"></span>
+        </button>
+      </span>
+      <div class="nav-backdrop" id="navBackdrop" aria-hidden="true"></div>
       <nav class="nav" id="mainNav">
         <div class="nav-dropdown">
           <a href="./pages/a-chacara.html" class="nav-dropdown-link">A Chácara</a>
@@ -113,7 +121,7 @@
         <div class="nav-dropdown">
           <a href="#servicos" class="nav-dropdown-link">Casamentos</a>
           <div class="nav-submenu" aria-label="Submenu de Casamentos">
-            <a href="#servicos">Espaço para Cerimonia de Casamento</a>
+            <a href="./pages/cerimonia-casamento.html">Espaço para Cerimonia de Casamento</a>
             <a href="#servicos">Espaço para Festa de Casamento</a>
           </div>
         </div>
@@ -143,25 +151,28 @@
     <section class="hero" id="inicio">
       <div class="container hero-layout">
         <div class="hero-copy">
-          <h1 id="heroTitle">Seu evento com elegância e sofisticação em cada detalhe.</h1>
+          <h1 id="heroTitle">Celebre o amor em um cenário encantador e memorável.</h1>
           <p id="heroDescription">
-            Uma estrutura completa para celebrar com conforto, beleza e alto padrão.
-            Receba atendimento consultivo e uma proposta personalizada para sua data.
+            Jardins, salão climatizado e atendimento dedicado para transformar seu casamento em uma experiência inesquecível.
           </p>
         </div>
         <div class="hero-media" role="button" tabindex="0" aria-label="Ampliar foto em destaque">
           <div class="hero-slides" aria-hidden="true">
-            <div class="hero-slide active" style="background-image: url('./assets/hero-slide-evento-varanda.png');"></div>
-            <div class="hero-slide" style="background-image: url('./assets/hero-slide-celebre-amor.png');">
-              <span class="hero-photo-credit">Foto: <strong>MATEUS RIGO</strong></span>
+            <div class="hero-slide active" style="background-image: url('./assets/hero-slide-celebre-amor-vinicius.png');">
+              <span class="hero-photo-credit">Foto: <strong>VINICIUS AGUIAR</strong></span>
+            </div>
+            <div class="hero-slide" style="background-image: url('./assets/hero-slide-grande-dia-casal.png');">
+              <span class="hero-photo-credit">Foto: <strong>VINICIUS AGUIAR</strong></span>
             </div>
             <div class="hero-slide hero-slide-focus-middle" style="background-image: url('./assets/hero-slide-3.png');">
               <span class="hero-photo-credit">Foto: <strong>DANILO ZONTA</strong></span>
             </div>
-            <div class="hero-slide" style="background-image: url('./assets/hero-slide-4.png');">
+            <div class="hero-slide hero-slide-focus-ambiente" style="background-image: url('./assets/hero-slide-cada-ambiente-mateus-rigo.png');">
               <span class="hero-photo-credit">Foto: <strong>MATEUS RIGO</strong></span>
             </div>
-            <div class="hero-slide hero-slide-focus-girl" style="background-image: url('./assets/hero-slide-5.png');"></div>
+            <div class="hero-slide hero-slide-focus-girl" style="background-image: url('./assets/hero-slide-grande-dia-vinicius.png');">
+              <span class="hero-photo-credit">Foto: <strong>VINICIUS AGUIAR</strong></span>
+            </div>
             <div class="hero-slide" style="background-image: url('./assets/hero-slide-6.png');">
               <span class="hero-photo-credit">Foto: <strong>ISAIAS DE SOUZA</strong></span>
             </div>

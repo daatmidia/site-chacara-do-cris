@@ -1,5 +1,6 @@
 const menuToggle = document.querySelector("#menuToggle");
 const mainNav = document.querySelector("#mainNav");
+const navBackdrop = document.querySelector("#navBackdrop");
 const contactForm = document.querySelector("#contactForm");
 const heroSlides = document.querySelectorAll(".hero-slide");
 const heroPrev = document.querySelector(".hero-arrow-prev");
@@ -7,18 +8,20 @@ const heroNext = document.querySelector(".hero-arrow-next");
 const heroMedia = document.querySelector(".hero-media");
 const heroTitle = document.querySelector("#heroTitle");
 const heroDescription = document.querySelector("#heroDescription");
+const heroCopy = document.querySelector(".hero-copy");
 const header = document.querySelector(".header");
+const whatsappFloat = document.querySelector(".whatsapp-float");
 
 const heroMessages = [
-  {
-    title: "Seu evento com elegância e sofisticação em cada detalhe.",
-    description:
-      "Uma estrutura completa para celebrar com conforto, beleza e alto padrão. Receba atendimento consultivo e uma proposta personalizada para sua data."
-  },
   {
     title: "Celebre o amor em um cenário encantador e memorável.",
     description:
       "Jardins, salão climatizado e atendimento dedicado para transformar seu casamento em uma experiência inesquecível."
+  },
+  {
+    title: "Seu evento com elegância e sofisticação em cada detalhe.",
+    description:
+      "Uma estrutura completa para celebrar com conforto, beleza e alto padrão. Receba atendimento consultivo e uma proposta personalizada para sua data."
   },
   {
     title: "Festas e eventos com energia, estilo e organização impecável.",
@@ -42,25 +45,53 @@ const heroMessages = [
   }
 ];
 
-const heroImages = [
-  "./assets/hero-slide-evento-varanda.png",
-  "./assets/hero-slide-celebre-amor.png",
-  "./assets/hero-slide-3.png",
-  "./assets/hero-slide-4.png",
-  "./assets/hero-slide-5.png",
-  "./assets/hero-slide-6.png"
-];
+const heroImages = heroSlides.length
+  ? Array.from(heroSlides).map((slide) => {
+      const match = slide.style.backgroundImage.match(/url\(["']?(.+?)["']?\)/);
+      return match ? match[1] : "";
+    })
+  : [];
+
+const getHeroSlideLabel = (slideIndex) =>
+  heroSlides[slideIndex]?.dataset.alt || heroMessages[slideIndex]?.title || "Foto ampliada";
 
 if (menuToggle && mainNav) {
   const navDropdowns = mainNav.querySelectorAll(".nav-dropdown");
   const navDropdownLinks = mainNav.querySelectorAll(".nav-dropdown-link");
 
-  const closeAllDropdowns = () => {
-    navDropdowns.forEach((dropdown) => dropdown.classList.remove("open"));
+  const updateSubmenuOpenState = () => {
+    const hasOpenDropdown = [...navDropdowns].some((dropdown) =>
+      dropdown.classList.contains("open")
+    );
+    document.body.classList.toggle("nav-submenu-open", hasOpenDropdown);
   };
 
-  menuToggle.addEventListener("click", () => {
-    mainNav.classList.toggle("open");
+  const closeAllDropdowns = () => {
+    navDropdowns.forEach((dropdown) => dropdown.classList.remove("open"));
+    updateSubmenuOpenState();
+  };
+
+  const setMenuOpen = (open) => {
+    mainNav.classList.toggle("open", open);
+    menuToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    menuToggle.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+    navBackdrop?.classList.toggle("open", open);
+    navBackdrop?.setAttribute("aria-hidden", open ? "false" : "true");
+    document.body.classList.toggle("nav-open", open);
+
+    if (!open) {
+      closeAllDropdowns();
+    }
+  };
+
+  menuToggle.addEventListener("click", (event) => {
+    event.stopPropagation();
+    setMenuOpen(!mainNav.classList.contains("open"));
+  });
+
+  navBackdrop?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    setMenuOpen(false);
   });
 
   navDropdownLinks.forEach((link) => {
@@ -70,33 +101,53 @@ if (menuToggle && mainNav) {
         return;
       }
 
+      const isMobileNav = window.matchMedia("(max-width: 760px)").matches;
+
+      if (!isMobileNav) {
+        return;
+      }
+
       event.preventDefault();
+      event.stopPropagation();
+
       const shouldOpen = !dropdown.classList.contains("open");
       closeAllDropdowns();
       if (shouldOpen) {
         dropdown.classList.add("open");
       }
+      updateSubmenuOpenState();
     });
   });
 
   mainNav.querySelectorAll(".nav-submenu a").forEach((submenuLink) => {
-    submenuLink.addEventListener("click", () => {
-      closeAllDropdowns();
-      mainNav.classList.remove("open");
+    submenuLink.addEventListener("click", (event) => {
+      event.stopPropagation();
+      setMenuOpen(false);
     });
   });
 
   document.addEventListener("click", (event) => {
-    if (!mainNav.contains(event.target)) {
-      closeAllDropdowns();
+    if (mainNav.contains(event.target) || menuToggle.contains(event.target)) {
+      return;
+    }
+
+    closeAllDropdowns();
+
+    if (mainNav.classList.contains("open")) {
+      setMenuOpen(false);
     }
   });
 
   mainNav.querySelectorAll('a[href^="#"]:not(.nav-dropdown-link)').forEach((link) => {
     link.addEventListener("click", () => {
-      mainNav.classList.remove("open");
-      closeAllDropdowns();
+      setMenuOpen(false);
     });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && mainNav.classList.contains("open")) {
+      setMenuOpen(false);
+    }
   });
 }
 
@@ -139,8 +190,19 @@ if (heroSlides.length > 1) {
       return;
     }
 
-    heroTitle.textContent = heroMessages[slideIndex].title;
-    heroDescription.textContent = heroMessages[slideIndex].description;
+    const applyMessage = () => {
+      heroTitle.textContent = heroMessages[slideIndex].title;
+      heroDescription.textContent = heroMessages[slideIndex].description;
+      heroCopy?.classList.remove("is-changing");
+    };
+
+    if (!heroCopy || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      applyMessage();
+      return;
+    }
+
+    heroCopy.classList.add("is-changing");
+    window.setTimeout(applyMessage, 220);
   };
 
   updateHeroMessage(currentSlide);
@@ -219,13 +281,13 @@ if (heroMedia || galleryImages.length > 0) {
         return;
       }
 
-      openPhotoModal(heroImages[currentSlide], heroMessages[currentSlide]?.title);
+      openPhotoModal(heroImages[currentSlide], getHeroSlideLabel(currentSlide));
     });
 
     heroMedia.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
-        openPhotoModal(heroImages[currentSlide], heroMessages[currentSlide]?.title);
+        openPhotoModal(heroImages[currentSlide], getHeroSlideLabel(currentSlide));
       }
     });
   }
@@ -255,6 +317,9 @@ const revealItems = document.querySelectorAll(".reveal");
 if (header) {
   const updateHeaderOnScroll = () => {
     header.classList.toggle("scrolled", window.scrollY > 20);
+    if (whatsappFloat) {
+      whatsappFloat.classList.toggle("is-pulsing", window.scrollY > 120);
+    }
   };
 
   updateHeaderOnScroll();

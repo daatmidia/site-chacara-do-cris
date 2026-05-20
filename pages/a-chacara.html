@@ -23,10 +23,16 @@
 <body>
   <header class="header">
     <div class="container nav-wrap">
-      <a class="brand" href="../index.html#inicio" aria-label="Chácara do Cris — início">
-        <img class="brand-logo" src="../assets/logo-chacara-do-cris.png" alt="Chácara do Cris" width="116" height="116">
-      </a>
-      <nav class="nav">
+      <div class="nav-brand-group">
+        <a class="brand" href="../index.html#inicio" aria-label="Chácara do Cris — início">
+          <img class="brand-logo" src="../assets/logo-chacara-do-cris.png" alt="Chácara do Cris" width="116" height="116">
+        </a>
+        <a class="nav-mobile-home" href="../index.html">Início</a>
+      </div>
+      <span class="nav-mobile-bar">
+        <a class="nav-mobile-cta" href="../index.html#contato">Solicitar proposta</a>
+      </span>
+      <nav class="nav nav--compact">
         <a href="../index.html">Início</a>
         <a class="nav-cta" href="../index.html#contato">Solicitar proposta</a>
       </nav>
@@ -37,23 +43,18 @@
     <section class="section section-highlight" id="espaco">
       <div class="container split">
         <div>
-          <h2>Uma estrutura pensada para impressionar</h2>
-          <h3 id="historia">Referência no Segmento</h3>
+          <h2 id="historia">O Cenário Perfeito para Sua História</h2>
           <p>
-            Há mais de 12 anos, uma história especial começou a ser escrita aqui.
-            Uma amiga do casal escolheu este cenário encantador para celebrar seu casamento e foi desse momento que nasceu a Chácara do Cris, um espaço que rapidamente se tornou reconhecido regionalmente por receber celebrações inesquecíveis.
+            Há mais de 12 anos, a Chácara do Cris nasceu de um momento especial: o casamento de uma amiga que se encantou por este cenário. O que começou como um sonho cresceu, ganhou prestígio regional e, hoje, já soma mais de 400 eventos realizados.
           </p>
           <p>
-            Com o passar dos anos, o sonho cresceu.
+            Em 2026, passamos por uma transformação completa. Unindo natureza e sofisticação, nosso espaço foi totalmente renovado para oferecer um design moderno, atemporal e acolhedor.
           </p>
           <p>
-            Em 2026, após reformas e melhorias, o espaço passou por uma transformação completa e deu origem a um ambiente pensado para unir natureza, elegância e experiências memoráveis.
+            Seja para casamentos, celebrações ou eventos corporativos, estamos prontos para eternizar os seus melhores momentos.
           </p>
           <p>
-            Hoje, com mais de 400 eventos realizados, a Chácara se tornou referência pelo seu design moderno, atemporal e acolhedor, perfeito para casamentos, celebrações, eventos corporativos e momentos que merecem ser eternizados.
-          </p>
-          <p>
-            Se você sonha com um cenário único para viver os dias mais importantes da sua vida, venha conhecer e se encantar com cada detalhe.
+            Venha se encantar com cada detalhe. Agende sua visita!
           </p>
         </div>
         <div class="gallery-grid" aria-label="Galeria de fotos do espaço">
@@ -287,14 +288,29 @@
       </div>
     </section>
 
-    <section class="section cta-final" id="cta-eventos">
-      <div class="container cta-content">
-        <h2>Pronto para criar um evento inesquecível?</h2>
-        <p>Fale com nossa equipe, agende uma visita e receba uma proposta personalizada para sua data.</p>
-        <a class="btn btn-primary" href="https://calendar.google.com" target="_blank" rel="noopener noreferrer">Agendar visita no calendário</a>
-      </div>
-    </section>
-
   </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <div>
+        <strong>Chácara do Cris</strong>
+        <p>Eventos com sofisticação, natureza e excelência.</p>
+      </div>
+      <div>
+        <p>WhatsApp: (49) 99800-9688</p>
+        <p>E-mail: contato@chacaradocris.com.br</p>
+        <a class="footer-instagram" href="https://www.instagram.com/chacaradocris/" target="_blank" rel="noopener noreferrer" aria-label="Abrir Instagram da Chácara do Cris">
+          <img src="../assets/instagram-icon.svg" width="20" height="20" alt="" aria-hidden="true">
+          <span>@CHACARADOCRIS</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <a class="whatsapp-float" href="https://wa.me/5549998009688?text=Olá!%20Quero%20agendar%20uma%20visita%20ao%20Chácara%20do%20Cris." target="_blank" rel="noopener noreferrer" aria-label="Falar no WhatsApp">
+    <img class="whatsapp-float-icon" src="../assets/whatsapp-icon.png" width="140" height="130" alt="" decoding="async">
+  </a>
+
+  <script src="../js/main.js"></script>
 </body>
 </html>

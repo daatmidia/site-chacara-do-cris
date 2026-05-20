@@ -23,10 +23,16 @@
 <body>
   <header class="header">
     <div class="container nav-wrap">
-      <a class="brand" href="../index.html#inicio" aria-label="Chácara do Cris — início">
-        <img class="brand-logo" src="../assets/logo-chacara-do-cris.png" alt="Chácara do Cris" width="116" height="116">
-      </a>
-      <nav class="nav">
+      <div class="nav-brand-group">
+        <a class="brand" href="../index.html#inicio" aria-label="Chácara do Cris — início">
+          <img class="brand-logo" src="../assets/logo-chacara-do-cris.png" alt="Chácara do Cris" width="116" height="116">
+        </a>
+        <a class="nav-mobile-home" href="../index.html">Início</a>
+      </div>
+      <span class="nav-mobile-bar">
+        <a class="nav-mobile-cta" href="../index.html#contato">Solicitar proposta</a>
+      </span>
+      <nav class="nav nav--compact">
         <a href="../index.html">Início</a>
         <a class="nav-cta" href="../index.html#contato">Solicitar proposta</a>
       </nav>
@@ -198,5 +204,28 @@
       </div>
     </section>
   </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <div>
+        <strong>Chácara do Cris</strong>
+        <p>Eventos com sofisticação, natureza e excelência.</p>
+      </div>
+      <div>
+        <p>WhatsApp: (49) 99800-9688</p>
+        <p>E-mail: contato@chacaradocris.com.br</p>
+        <a class="footer-instagram" href="https://www.instagram.com/chacaradocris/" target="_blank" rel="noopener noreferrer" aria-label="Abrir Instagram da Chácara do Cris">
+          <img src="../assets/instagram-icon.svg" width="20" height="20" alt="" aria-hidden="true">
+          <span>@CHACARADOCRIS</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <a class="whatsapp-float" href="https://wa.me/5549998009688?text=Olá!%20Quero%20agendar%20uma%20visita%20ao%20Chácara%20do%20Cris." target="_blank" rel="noopener noreferrer" aria-label="Falar no WhatsApp">
+    <img class="whatsapp-float-icon" src="../assets/whatsapp-icon.png" width="140" height="130" alt="" decoding="async">
+  </a>
+
+  <script src="../js/main.js"></script>
 </body>
 </html>
