@@ -191,6 +191,18 @@ if (menuToggle && mainNav) {
 }
 
 if (contactForm) {
+  const contactFormWrap = document.querySelector("#contactFormWrap");
+  const contactFormSuccess = document.querySelector("#contactFormSuccess");
+  const defaultTipo = contactForm.dataset.defaultTipo;
+
+  if (defaultTipo) {
+    const tipoSelect = contactForm.querySelector('[name="tipo"]');
+
+    if (tipoSelect) {
+      tipoSelect.value = defaultTipo;
+    }
+  }
+
   contactForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
@@ -199,24 +211,46 @@ if (contactForm) {
     const email = formData.get("email") || "";
     const telefone = formData.get("telefone") || "";
     const tipo = formData.get("tipo") || "";
+    const data = formData.get("data") || "";
+    const convidados = formData.get("convidados") || "";
+    const origem = formData.get("origem") || "";
     const mensagem = formData.get("mensagem") || "";
     const numeroWhatsapp = contactForm.dataset.whatsapp || "5549998009688";
 
+    const dataFormatada = data
+      ? new Date(`${data}T12:00:00`).toLocaleDateString("pt-BR", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric"
+        })
+      : "";
+
     const texto = [
-      "Vim pelo Site...",
-      "Olá! Quero solicitar um orçamento para evento na Chácara do Cris.",
+      "Vim pelo site da Chácara do Cris",
+      "Olá! Gostaria de verificar a disponibilidade da minha data.",
       "",
       `Nome: ${nome}`,
       `E-mail: ${email}`,
-      `Telefone: ${telefone}`,
+      `Telefone/WhatsApp: ${telefone}`,
       `Tipo de evento: ${tipo}`,
-      `Mensagem: ${mensagem}`
-    ].join("\n");
+      `Data desejada: ${dataFormatada || data}`,
+      `Número de convidados: ${convidados}`,
+      `Como nos conheceu: ${origem}`,
+      mensagem ? `Mensagem: ${mensagem}` : ""
+    ]
+      .filter(Boolean)
+      .join("\n");
 
     const linkWhatsapp = `https://wa.me/${numeroWhatsapp}?text=${encodeURIComponent(texto)}`;
 
     localStorage.setItem("lead:origem", "site-chacara-do-cris");
     window.open(linkWhatsapp, "_blank", "noopener,noreferrer");
+
+    if (contactFormWrap && contactFormSuccess) {
+      contactFormWrap.hidden = true;
+      contactFormSuccess.hidden = false;
+      contactFormSuccess.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   });
 }
 

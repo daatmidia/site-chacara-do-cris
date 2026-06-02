@@ -538,6 +538,49 @@ h2 {
   background: #5d6e44;
 }
 
+#contactForm .btn-form-submit {
+  width: 100%;
+  margin-top: 0.35rem;
+  padding: 1.05rem 1.4rem;
+  font-size: 1.08rem;
+  border-radius: 999px;
+}
+
+.btn-green-pulse {
+  background: #4f5d39;
+  color: #fff;
+  border: none;
+  animation: btn-green-pulse 2.2s ease-in-out infinite;
+}
+
+.btn-green-pulse:hover,
+.btn-green-pulse:focus-visible {
+  background: #5d6e44;
+  color: #fff;
+  animation: none;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(79, 93, 57, 0.35);
+}
+
+@keyframes btn-green-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 14px rgba(79, 93, 57, 0.28);
+  }
+
+  50% {
+    transform: scale(1.04);
+    box-shadow: 0 8px 28px rgba(79, 93, 57, 0.45);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-green-pulse {
+    animation: none;
+  }
+}
+
 .btn-secondary {
   background: #fff;
   color: var(--text);
@@ -1590,6 +1633,148 @@ cite {
   width: 100%;
 }
 
+.form-trust-note {
+  max-width: 720px;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.contact-divider {
+  max-width: 720px;
+  margin: 1.35rem 0 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.contact-divider::before,
+.contact-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.btn-whatsapp-direct {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 720px;
+  margin-top: 0.25rem;
+  padding: 1rem 1.15rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #25d366 0%, #1ebe57 100%);
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 10px 28px rgba(37, 211, 102, 0.35);
+  animation: btn-whatsapp-direct-pulse 2.2s ease-in-out infinite;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn-whatsapp-direct:hover,
+.btn-whatsapp-direct:focus-visible {
+  color: #fff;
+  background: linear-gradient(135deg, #2ee676 0%, #25d366 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(37, 211, 102, 0.45);
+  animation: none;
+}
+
+.btn-whatsapp-direct-icon {
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: auto;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
+}
+
+.btn-whatsapp-direct-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  line-height: 1.3;
+  text-align: left;
+}
+
+.btn-whatsapp-direct-text strong {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.btn-whatsapp-direct-action {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.btn-whatsapp-direct-number {
+  font-size: 0.88rem;
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+@keyframes btn-whatsapp-direct-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 10px 28px rgba(37, 211, 102, 0.35);
+  }
+
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 14px 36px rgba(37, 211, 102, 0.5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-whatsapp-direct {
+    animation: none;
+  }
+}
+
+.contact-form-success {
+  max-width: 720px;
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.contact-form-success h2 {
+  margin-bottom: 1rem;
+  font-size: clamp(1.25rem, 3vw, 1.65rem);
+  color: #4f5d39;
+  line-height: 1.3;
+}
+
+.contact-form-success-lead {
+  margin-bottom: 1rem;
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.contact-form-success-note {
+  margin-bottom: 1rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.contact-form-success .btn-whatsapp-direct {
+  margin-top: 0.5rem;
+}
+
+#contato .container > [hidden] {
+  display: none !important;
+}
+
 label {
   font-weight: 600;
 }
@@ -2564,8 +2749,13 @@ textarea:focus {
   background-position: center 78%;
 }
 
+.hero-slide-formatura {
+  background-size: cover;
+  background-position: center 18%;
+}
+
 .hero-slide-focus-ambiente {
-  background-position: center 37%;
+  background-position: center 52%;
 }
 
 .hero-slide-focus-noivos {
@@ -3325,8 +3515,13 @@ textarea:focus {
     background-position: center;
   }
 
+  .hero-slide-formatura {
+    background-size: cover;
+    background-position: center 22%;
+  }
+
   .hero-slide-focus-ambiente {
-    background-position: center 42%;
+    background-position: center 48%;
   }
 
   .hero-fade {

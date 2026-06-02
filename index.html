@@ -120,7 +120,7 @@
         <div class="nav-dropdown">
           <a href="./pages/cerimonia-casamento.html" class="nav-dropdown-link">Eventos</a>
           <div class="nav-submenu" aria-label="Submenu de Eventos">
-            <a href="./pages/cerimonia-casamento.html">Espaço para Cerimônia/Festa de Casamento</a>
+            <a href="./pages/cerimonia-casamento.html">Casamentos</a>
             <a href="./pages/festa-formatura-15-anos.html#formaturas">Formaturas</a>
             <a href="./pages/festa-15-anos-aniversarios.html#15-anos">15 Anos/Aniversários</a>
             <a href="./pages/festa-15-anos-aniversarios.html#corporativos">Eventos Corporativos</a>
@@ -147,14 +147,14 @@
             <div class="hero-slide active hero-slide-focus-noivos" style="background-image: url('./assets/hero-slide-celebre-amor-michel-kuntze.png');">
               <span class="hero-photo-credit">Foto: <strong>MICHEL KUNTZE</strong></span>
             </div>
-            <div class="hero-slide" style="background-image: url('./assets/hero-slide-grande-dia-casal.png');">
-              <span class="hero-photo-credit">Foto: <strong>VINICIUS AGUIAR</strong></span>
+            <div class="hero-slide hero-slide-formatura" data-alt="Formatura celebrada na Chácara do Cris" style="background-image: url('./assets/hero-slide-seu-evento-formatura.png');">
+              <span class="hero-photo-credit">Foto: <strong>MICHEL KUNTZE</strong></span>
             </div>
             <div class="hero-slide hero-slide-focus-middle" style="background-image: url('./assets/hero-slide-3.png');">
               <span class="hero-photo-credit">Foto: <strong>DANILO ZONTA</strong></span>
             </div>
-            <div class="hero-slide hero-slide-focus-ambiente" style="background-image: url('./assets/hero-slide-cada-ambiente-mateus-rigo.png');">
-              <span class="hero-photo-credit">Foto: <strong>MATEUS RIGO</strong></span>
+            <div class="hero-slide hero-slide-focus-ambiente" data-alt="Noiva no ambiente da Chácara do Cris" style="background-image: url('./assets/hero-slide-cada-ambiente-agnaldo-pereira.png');">
+              <span class="hero-photo-credit">Foto: <strong>AGNALDO PEREIRA</strong></span>
             </div>
             <div class="hero-slide hero-slide-focus-girl" style="background-image: url('./assets/hero-slide-grande-dia-vinicius.png');">
               <span class="hero-photo-credit">Foto: <strong>VINICIUS AGUIAR</strong></span>
@@ -221,32 +221,91 @@
 
     <section class="section reveal" id="contato">
       <div class="container">
-        <h2>Solicite seu orçamento</h2>
-        <p class="section-intro">Preencha o formulário e retornaremos rapidamente com disponibilidade e proposta.</p>
-        <form id="contactForm" class="form" action="./pages/obrigado.html" method="get" data-whatsapp="5549998009688">
-          <label for="nome">Nome completo</label>
-          <input id="nome" name="nome" type="text" required>
+        <div id="contactFormWrap">
+          <h2>Vamos conversar sobre o seu evento?</h2>
+          <p class="section-intro">Preencha abaixo e retornaremos em até 24h com disponibilidade e proposta personalizada sem compromisso.</p>
+          <form id="contactForm" class="form" data-whatsapp="5549998009688">
+            <label for="nome">Nome completo</label>
+            <input id="nome" name="nome" type="text" required autocomplete="name">
 
-          <label for="email">E-mail</label>
-          <input id="email" name="email" type="email" required>
+            <label for="email">E-mail</label>
+            <input id="email" name="email" type="email" required autocomplete="email">
 
-          <label for="telefone">Telefone/WhatsApp</label>
-          <input id="telefone" name="telefone" type="tel" required>
+            <label for="telefone">Telefone/WhatsApp</label>
+            <input id="telefone" name="telefone" type="tel" required autocomplete="tel">
 
-          <label for="tipo">Tipo de evento</label>
-          <select id="tipo" name="tipo" required>
-            <option value="">Selecione</option>
-            <option>Casamento</option>
-            <option>15 anos</option>
-            <option>Aniversário</option>
-            <option>Corporativo</option>
-          </select>
+            <label for="tipo">Tipo de evento</label>
+            <select id="tipo" name="tipo" required>
+              <option value="">Selecione</option>
+              <option value="Casamento">Casamento</option>
+              <option value="15 anos">15 anos</option>
+              <option value="Aniversário">Aniversário</option>
+              <option value="Formatura">Formatura</option>
+              <option value="Corporativo">Corporativo</option>
+              <option value="Outro">Outro</option>
+            </select>
 
-          <label for="mensagem">Mensagem</label>
-          <textarea id="mensagem" name="mensagem" rows="5" placeholder="Conte um pouco sobre seu evento..."></textarea>
+            <label for="data">Data desejada</label>
+            <input id="data" name="data" type="date" required>
 
-          <button class="btn btn-primary btn-form-submit" type="submit">Enviar solicitação</button>
-        </form>
+            <label for="convidados">Número de convidados</label>
+            <input id="convidados" name="convidados" type="number" min="1" max="500" placeholder="Ex.: 150" required>
+
+            <label for="origem">Como nos conheceu?</label>
+            <select id="origem" name="origem" required>
+              <option value="">Selecione</option>
+              <option value="Instagram">Instagram</option>
+              <option value="Google">Google</option>
+              <option value="Indicação">Indicação de amigo ou familiar</option>
+              <option value="Já conhecia o espaço">Já conhecia o espaço</option>
+              <option value="Outro">Outro</option>
+            </select>
+
+            <label for="mensagem">Mensagem</label>
+            <textarea id="mensagem" name="mensagem" rows="5" placeholder="Conte um pouco sobre seu evento..."></textarea>
+
+            <button class="btn btn-primary btn-form-submit btn-green-pulse" type="submit">Verificar disponibilidade da minha data →</button>
+          </form>
+          <p class="form-trust-note">✔ Respondemos em até 24h úteis · Seus dados são confidenciais e não serão compartilhados</p>
+          <div class="contact-divider" aria-hidden="true"><span>ou</span></div>
+          <a
+            class="btn btn-whatsapp-direct"
+            href="https://wa.me/5549998009688?text=Ol%C3%A1!%20Gostaria%20de%20conversar%20sobre%20um%20evento%20na%20Ch%C3%A1cara%20do%20Cris."
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Enviar mensagem no WhatsApp para (49) 99800-9688"
+          >
+            <img class="btn-whatsapp-direct-icon" src="./assets/whatsapp-icon.png" width="40" height="40" alt="" aria-hidden="true">
+            <span class="btn-whatsapp-direct-text">
+              <strong>Prefere falar agora?</strong>
+              <span class="btn-whatsapp-direct-action">Chame no WhatsApp →</span>
+              <span class="btn-whatsapp-direct-number">+55 (49) 99800-9688</span>
+            </span>
+          </a>
+        </div>
+        <div id="contactFormSuccess" class="contact-form-success" hidden>
+          <h2>Obrigado por confiar na Chácara do Cris!</h2>
+          <p class="contact-form-success-lead">
+            Recebemos suas informações com carinho. Em até <strong>24 horas úteis</strong>, nossa equipe entrará em contato para confirmar a disponibilidade da sua data e preparar uma proposta feita sob medida para o seu evento.
+          </p>
+          <p class="contact-form-success-note">
+            Enquanto isso, fique à vontade para sonhar com cada detalhe — estamos ansiosos para fazer parte dessa história com você.
+          </p>
+          <a
+            class="btn btn-whatsapp-direct"
+            href="https://wa.me/5549998009688?text=Ol%C3%A1!%20Gostaria%20de%20conversar%20sobre%20um%20evento%20na%20Ch%C3%A1cara%20do%20Cris."
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Enviar mensagem no WhatsApp para (49) 99800-9688"
+          >
+            <img class="btn-whatsapp-direct-icon" src="./assets/whatsapp-icon.png" width="40" height="40" alt="" aria-hidden="true">
+            <span class="btn-whatsapp-direct-text">
+              <strong>Prefere falar agora?</strong>
+              <span class="btn-whatsapp-direct-action">Chame no WhatsApp →</span>
+              <span class="btn-whatsapp-direct-number">+55 (49) 99800-9688</span>
+            </span>
+          </a>
+        </div>
       </div>
     </section>
     <section class="section reveal section-highlight" id="avaliacoes-google">
