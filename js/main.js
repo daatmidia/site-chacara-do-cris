@@ -283,22 +283,62 @@ if (heroMedia || galleryImages.length > 0) {
   const modal = document.createElement("div");
   modal.className = "photo-modal";
   modal.setAttribute("aria-hidden", "true");
+  modal.setAttribute("role", "dialog");
+  modal.setAttribute("aria-modal", "true");
+  modal.setAttribute("aria-label", "Visualização de fotos");
   modal.innerHTML = `
     <button class="photo-modal-close" type="button" aria-label="Fechar visualização da foto">×</button>
+    <button class="photo-modal-arrow photo-modal-prev" type="button" aria-label="Ver foto anterior">‹</button>
+    <button class="photo-modal-arrow photo-modal-next" type="button" aria-label="Ver próxima foto">›</button>
+    <p class="photo-modal-counter" aria-live="polite"></p>
     <img class="photo-modal-img" alt="">
   `;
   document.body.appendChild(modal);
 
   const modalImage = modal.querySelector(".photo-modal-img");
   const modalClose = modal.querySelector(".photo-modal-close");
+  const modalPrev = modal.querySelector(".photo-modal-prev");
+  const modalNext = modal.querySelector(".photo-modal-next");
+  const modalCounter = modal.querySelector(".photo-modal-counter");
 
-  const openPhotoModal = (src, alt = "Foto ampliada") => {
-    if (!modalImage || !src) {
+  let galleryItems = [];
+  let currentGalleryIndex = 0;
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let lastImageActivation = 0;
+
+  const updateModalControls = () => {
+    const hasMultiple = galleryItems.length > 1;
+
+    modalPrev.hidden = !hasMultiple;
+    modalNext.hidden = !hasMultiple;
+
+    if (modalCounter) {
+      modalCounter.textContent = hasMultiple ? `${currentGalleryIndex + 1} / ${galleryItems.length}` : "";
+      modalCounter.hidden = !hasMultiple;
+    }
+  };
+
+  const updateModalImage = () => {
+    const item = galleryItems[currentGalleryIndex];
+
+    if (!modalImage || !item?.src) {
       return;
     }
 
-    modalImage.src = src;
-    modalImage.alt = alt;
+    modalImage.src = item.src;
+    modalImage.alt = item.alt || "Foto ampliada";
+    updateModalControls();
+  };
+
+  const openPhotoGallery = (items, startIndex = 0) => {
+    if (!modalImage || !items.length) {
+      return;
+    }
+
+    galleryItems = items;
+    currentGalleryIndex = (startIndex + items.length) % items.length;
+    updateModalImage();
     modal.classList.add("open");
     modal.setAttribute("aria-hidden", "false");
     document.body.classList.add("modal-open");
@@ -308,50 +348,208 @@ if (heroMedia || galleryImages.length > 0) {
     modal.classList.remove("open");
     modal.setAttribute("aria-hidden", "true");
     document.body.classList.remove("modal-open");
+    galleryItems = [];
+    currentGalleryIndex = 0;
+
     if (modalImage) {
       modalImage.removeAttribute("src");
     }
+
+    updateModalControls();
   };
 
-  if (heroMedia) {
+  const showPreviousPhoto = () => {
+    if (galleryItems.length <= 1) {
+      return;
+    }
+
+    currentGalleryIndex = (currentGalleryIndex - 1 + galleryItems.length) % galleryItems.length;
+    updateModalImage();
+  };
+
+  const showNextPhoto = () => {
+    if (galleryItems.length <= 1) {
+      return;
+    }
+
+    currentGalleryIndex = (currentGalleryIndex + 1) % galleryItems.length;
+    updateModalImage();
+  };
+
+  const getGalleryItemsFromContainer = (container) =>
+    [...container.querySelectorAll(".photo img, figure img")].map((image) => ({
+      src: image.currentSrc || image.src,
+      alt: image.alt || "Foto ampliada"
+    }));
+
+  const getGalleryContainer = (image) => {
+    const panel = image.closest(".cerimonia-gallery-panel, .gallery-view-panel");
+    const panelGrid = panel?.querySelector(".gallery-grid--deck-expanded, .gallery-grid");
+
+    if (panelGrid) {
+      return panelGrid;
+    }
+
+    return image.closest(".gallery-grid--deck-expanded, .gallery-grid");
+  };
+
+  const openPhotoFromImage = (image) => {
+    const container = getGalleryContainer(image);
+
+    if (container) {
+      const items = getGalleryItemsFromContainer(container);
+      const images = [...container.querySelectorAll(".photo img, figure img")];
+      const startIndex = Math.max(0, images.indexOf(image));
+
+      openPhotoGallery(items, startIndex);
+      return;
+    }
+
+    openPhotoGallery(
+      [
+        {
+          src: image.currentSrc || image.src,
+          alt: image.alt || "Foto ampliada"
+        }
+      ],
+      0
+    );
+  };
+
+  const getActiveHeroSlideIndex = () => {
+    const activeSlide = document.querySelector(".hero-slide.active");
+    const slideIndex = activeSlide ? Array.from(heroSlides).indexOf(activeSlide) : 0;
+    return slideIndex >= 0 ? slideIndex : 0;
+  };
+
+  if (heroMedia && heroImages.length) {
+    const heroGalleryItems = heroImages.map((src, index) => ({
+      src,
+      alt: getHeroSlideLabel(index)
+    }));
+
     heroMedia.addEventListener("click", (event) => {
       if (event.target.closest(".hero-arrow")) {
         return;
       }
 
-      openPhotoModal(heroImages[currentSlide], getHeroSlideLabel(currentSlide));
+      openPhotoGallery(heroGalleryItems, getActiveHeroSlideIndex());
     });
 
     heroMedia.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
-        openPhotoModal(heroImages[currentSlide], getHeroSlideLabel(currentSlide));
+        openPhotoGallery(heroGalleryItems, getActiveHeroSlideIndex());
       }
     });
   }
 
-  galleryImages.forEach((image) => {
-    image.addEventListener("click", () => {
-      if (image.closest(".photo-gallery-trigger")) {
+  document.addEventListener(
+    "pointerup",
+    (event) => {
+      const image = event.target.closest(".photo img, .gallery-grid img");
+
+      if (!image || image.closest(".photo-gallery-trigger")) {
         return;
       }
 
-      openPhotoModal(image.currentSrc || image.src, image.alt);
-    });
+      if (event.pointerType === "mouse" && event.button !== 0) {
+        return;
+      }
+
+      const now = Date.now();
+      if (now - lastImageActivation < 450) {
+        return;
+      }
+
+      lastImageActivation = now;
+      event.preventDefault();
+      event.stopPropagation();
+      openPhotoFromImage(image);
+    },
+    true
+  );
+
+  modalClose?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    closePhotoModal();
   });
 
-  modalClose?.addEventListener("click", closePhotoModal);
+  modalPrev?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    showPreviousPhoto();
+  });
+
+  modalNext?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    showNextPhoto();
+  });
+
   modal.addEventListener("click", (event) => {
     if (event.target === modal) {
       closePhotoModal();
     }
   });
 
+  modal.addEventListener(
+    "touchstart",
+    (event) => {
+      touchStartX = event.touches[0]?.clientX ?? 0;
+      touchStartY = event.touches[0]?.clientY ?? 0;
+    },
+    { passive: true }
+  );
+
+  modal.addEventListener(
+    "touchend",
+    (event) => {
+      if (!modal.classList.contains("open") || galleryItems.length <= 1) {
+        return;
+      }
+
+      const touchEndX = event.changedTouches[0]?.clientX ?? 0;
+      const touchEndY = event.changedTouches[0]?.clientY ?? 0;
+      const deltaX = touchEndX - touchStartX;
+      const deltaY = touchEndY - touchStartY;
+
+      if (Math.abs(deltaX) < 40 || Math.abs(deltaX) < Math.abs(deltaY)) {
+        return;
+      }
+
+      event.preventDefault();
+
+      if (deltaX > 0) {
+        showPreviousPhoto();
+      } else {
+        showNextPhoto();
+      }
+    },
+    { passive: false }
+  );
+
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && modal.classList.contains("open")) {
+    if (!modal.classList.contains("open")) {
+      return;
+    }
+
+    if (event.key === "Escape") {
       closePhotoModal();
+      return;
+    }
+
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      showPreviousPhoto();
+      return;
+    }
+
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      showNextPhoto();
     }
   });
+
+  updateModalControls();
 }
 
 const revealItems = document.querySelectorAll(".reveal");

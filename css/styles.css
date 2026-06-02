@@ -1046,20 +1046,70 @@ body.modal-open {
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
 }
 
-.photo-modal-close {
+.photo-modal-close,
+.photo-modal-arrow {
   position: fixed;
+  z-index: 101;
+  border: none;
+  cursor: pointer;
+}
+
+.photo-modal-close {
   top: 18px;
   right: 18px;
-  z-index: 101;
   width: 44px;
   height: 44px;
-  border: none;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.92);
   color: #24211e;
   font-size: 2rem;
   line-height: 1;
-  cursor: pointer;
+}
+
+.photo-modal-arrow {
+  top: 50%;
+  width: 52px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  font-size: 3rem;
+  font-weight: 200;
+  line-height: 1;
+  border-radius: 999px;
+  transform: translateY(-50%);
+  transition: background 0.2s ease, transform 0.2s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.photo-modal-arrow:hover,
+.photo-modal-arrow:focus-visible {
+  background: rgba(255, 255, 255, 0.24);
+  transform: translateY(-50%) scale(1.04);
+}
+
+.photo-modal-prev {
+  left: 12px;
+}
+
+.photo-modal-next {
+  right: 12px;
+}
+
+.photo-modal-counter {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  z-index: 101;
+  margin: 0;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transform: translateX(-50%);
 }
 
 .testimonials {
@@ -2378,8 +2428,20 @@ textarea:focus {
   padding: 0;
 }
 
+.gallery-page {
+  background: #faf8f5;
+}
+
+.gallery-page-top {
+  background: #4f5d39;
+}
+
+.gallery-page .hero-gallery-head {
+  padding: clamp(1.5rem, 4vw, 2.2rem) 0 clamp(1rem, 2.5vw, 1.35rem);
+}
+
 .hero-gallery-head {
-  padding: clamp(1.5rem, 4vw, 2.2rem) clamp(4vw, 5vw, 6vw) clamp(1rem, 2.5vw, 1.4rem);
+  padding: clamp(1.5rem, 4vw, 2.2rem) 0 clamp(1rem, 2.5vw, 1.4rem);
 }
 
 .hero-gallery-head h1 {
@@ -2387,14 +2449,15 @@ textarea:focus {
   color: #f8f5ee;
   font-size: clamp(1.65rem, 4vw, 2.35rem);
   line-height: 1.12;
+  max-width: 100%;
 }
 
 .hero-gallery-head p {
   margin: 0;
-  max-width: 620px;
+  max-width: 42rem;
   color: #f2eee4;
   font-size: clamp(0.98rem, 2.5vw, 1.12rem);
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 .hero-gallery-media {
@@ -2418,13 +2481,19 @@ textarea:focus {
 }
 
 .hero-gallery:has(.cerimonia-gallery-bar) .hero-gallery-head {
-  padding-bottom: clamp(1.6rem, 3.5vw, 2.4rem);
+  padding-bottom: clamp(1rem, 2.5vw, 1.35rem);
 }
 
 .cerimonia-gallery-bar {
   background: #faf8f5;
-  margin-top: clamp(1rem, 2.5vw, 1.75rem);
-  padding: clamp(0.85rem, 2vw, 1.25rem) clamp(4vw, 5vw, 6vw) clamp(1.1rem, 2.5vw, 1.6rem);
+  margin-top: 0;
+  padding: clamp(1rem, 2.5vw, 1.5rem) 0 clamp(1.25rem, 3vw, 2rem);
+}
+
+.cerimonia-gallery-bar .container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
 .hero-gallery .gallery-grid--row {
@@ -2448,10 +2517,19 @@ textarea:focus {
 .hero-gallery .gallery-grid--row .photo figcaption {
   padding: 0.55rem 0.65rem;
   font-size: clamp(0.68rem, 1.1vw, 0.82rem);
+  line-height: 1.25;
+  text-align: left;
 }
 
 .photo-gallery-trigger {
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(79, 93, 57, 0.15);
+  user-select: none;
+}
+
+.photo-gallery-trigger img {
+  pointer-events: none;
 }
 
 .photo-gallery-trigger.is-active {
@@ -2460,18 +2538,48 @@ textarea:focus {
 }
 
 .cerimonia-gallery-panel {
+  position: relative;
   margin-top: clamp(0.85rem, 2vw, 1.25rem);
   padding-top: clamp(0.65rem, 1.5vw, 0.9rem);
   border-top: 1px solid var(--line);
 }
 
+.cerimonia-gallery-panel-close {
+  position: absolute;
+  top: 0.35rem;
+  right: 0;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(79, 93, 57, 0.12);
+  color: #4f5d39;
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.cerimonia-gallery-panel-close:hover,
+.cerimonia-gallery-panel-close:focus-visible {
+  background: rgba(79, 93, 57, 0.2);
+  transform: scale(1.04);
+}
+
+.gallery-grid--deck-expanded .photo {
+  cursor: zoom-in;
+}
+
 .cerimonia-gallery-panel-title {
-  margin: 0 0 0.55rem;
+  margin: 0 0 0.65rem;
+  padding-right: 2.75rem;
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #4f5d39;
+  line-height: 1.35;
 }
 
 .gallery-grid--deck-expanded {
@@ -2503,14 +2611,16 @@ textarea:focus {
 
 .cerimonia-gallery-panel-copy {
   margin-top: clamp(0.85rem, 2vw, 1.15rem);
-  max-width: 52rem;
+  max-width: 42rem;
+  width: 100%;
 }
 
 .cerimonia-gallery-panel-copy p {
-  margin: 0 0 0.55rem;
+  margin: 0 0 0.65rem;
   color: #4c4640;
   font-size: clamp(0.88rem, 1.8vw, 0.98rem);
-  line-height: 1.55;
+  line-height: 1.6;
+  text-align: left;
 }
 
 .cerimonia-gallery-panel-copy p:last-child {
@@ -2651,7 +2761,15 @@ textarea:focus {
   }
 
   .hero-gallery-head {
-    padding: clamp(1.4rem, 4vw, 2rem) clamp(4vw, 5vw, 6vw) clamp(0.85rem, 2vw, 1.1rem);
+    padding: clamp(1.4rem, 4vw, 2rem) 0 clamp(0.85rem, 2vw, 1.1rem);
+  }
+
+  .gallery-page-top {
+    background: #faf8f5;
+  }
+
+  .gallery-page .hero-gallery-head {
+    padding: clamp(1.4rem, 4vw, 2rem) 0 clamp(0.85rem, 2vw, 1.1rem);
   }
 
   .hero-gallery-media {
@@ -2659,12 +2777,13 @@ textarea:focus {
   }
 
   .cerimonia-gallery-bar {
-    margin-top: 1.15rem;
-    padding: 0.75rem 5vw 1rem;
+    margin-top: 0;
+    padding: 0.75rem 0 1rem;
   }
 
   .hero-gallery .gallery-grid--row {
-    gap: 0.45rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
   }
 
   .hero-gallery .gallery-grid--row .photo {
@@ -2672,19 +2791,24 @@ textarea:focus {
   }
 
   .hero-gallery .gallery-grid--row .photo figcaption {
-    padding: 0.4rem 0.45rem;
-    font-size: 0.62rem;
+    padding: 0.5rem 0.55rem;
+    font-size: clamp(0.68rem, 2.8vw, 0.78rem);
   }
 
   .gallery-grid--deck-expanded .photo {
-    flex-basis: 124px;
-    width: 124px;
-    height: 155px;
+    flex: 0 0 min(42vw, 148px);
+    width: min(42vw, 148px);
+    height: min(52vw, 185px);
+  }
+
+  .cerimonia-gallery-panel {
+    margin-top: 1rem;
+    padding-top: 0.85rem;
   }
 
   .cerimonia-gallery-panel-copy p {
-    font-size: 0.84rem;
-    line-height: 1.5;
+    font-size: 0.9rem;
+    line-height: 1.55;
   }
 
   .hero-cta {
@@ -2861,19 +2985,30 @@ textarea:focus {
     background: #faf8f5;
   }
 
-  .hero-gallery-head {
-    padding: clamp(1.6rem, 6vw, 2.2rem) 5vw clamp(0.9rem, 3vw, 1.1rem);
+  .gallery-page-top {
     background: #faf8f5;
+  }
+
+  .hero-gallery-head {
+    padding: clamp(1.35rem, 5vw, 1.85rem) 0 clamp(0.85rem, 3vw, 1rem);
+    background: transparent;
+  }
+
+  .gallery-page .hero-gallery-head {
+    padding: clamp(1.35rem, 5vw, 1.85rem) 0 clamp(0.85rem, 3vw, 1rem);
   }
 
   .hero-gallery-head h1 {
     color: var(--text);
-    font-size: clamp(1.85rem, 8vw, 2.6rem);
+    font-size: clamp(1.55rem, 7vw, 2.15rem);
+    max-width: none;
   }
 
   .hero-gallery-head p {
     color: #4c4640;
-    max-width: 92%;
+    max-width: none;
+    font-size: clamp(0.92rem, 3.8vw, 1.05rem);
+    line-height: 1.55;
   }
 
   .hero-gallery-media {
@@ -2882,12 +3017,64 @@ textarea:focus {
 
   .cerimonia-gallery-bar {
     background: #faf8f5;
-    margin-top: 1.25rem;
-    padding: 0.85rem 5vw 1.1rem;
+    margin-top: 0;
+    padding: 0.85rem 0 1.25rem;
+  }
+
+  .gallery-page:has(.cerimonia-gallery-panel:not([hidden])) .gallery-grid--row {
+    position: sticky;
+    top: calc(58px + env(safe-area-inset-top, 0px));
+    z-index: 6;
+    background: #faf8f5;
+    padding: 0.35rem 0 0.65rem;
+    margin-bottom: 0.15rem;
+    box-shadow: 0 8px 18px rgba(36, 33, 30, 0.06);
   }
 
   .hero-gallery:has(.cerimonia-gallery-bar) .hero-gallery-head {
-    padding-bottom: 1.35rem;
+    padding-bottom: 0.85rem;
+  }
+
+  .hero-gallery .gallery-grid--row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(0.55rem, 2.5vw, 0.75rem);
+  }
+
+  .hero-gallery .gallery-grid--row .photo figcaption {
+    font-size: clamp(0.66rem, 2.6vw, 0.76rem);
+    padding: 0.48rem 0.52rem;
+  }
+
+  .gallery-grid--deck-expanded {
+    gap: 0.55rem;
+    margin-inline: -0.15rem;
+    padding-inline: 0.15rem;
+  }
+
+  .gallery-grid--deck-expanded .photo {
+    flex: 0 0 min(44vw, 152px);
+    width: min(44vw, 152px);
+    height: min(54vw, 190px);
+  }
+
+  .cerimonia-gallery-panel-title {
+    font-size: 0.72rem;
+    padding-right: 2.5rem;
+  }
+
+  .cerimonia-gallery-panel-close {
+    top: 0.15rem;
+    width: 36px;
+    height: 36px;
+    font-size: 1.5rem;
+  }
+
+  .cerimonia-gallery-panel-copy {
+    max-width: none;
+  }
+
+  .cerimonia-gallery-panel-copy p {
+    font-size: 0.88rem;
   }
 
   .brand-logo {
@@ -2926,11 +3113,37 @@ textarea:focus {
     border-radius: 10px;
   }
 
+  .photo-modal-arrow {
+    width: 56px;
+    height: 72px;
+    font-size: 3.2rem;
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  .photo-modal-prev {
+    left: 6px;
+  }
+
+  .photo-modal-next {
+    right: 6px;
+  }
+
   .photo-modal-close {
     top: 12px;
     right: 12px;
     width: 42px;
     height: 42px;
+  }
+
+  .photo-modal-counter {
+    bottom: 14px;
+    font-size: 0.78rem;
+  }
+
+  .cerimonia-gallery-panel-close {
+    width: 38px;
+    height: 38px;
+    font-size: 1.6rem;
   }
 
   .parceiro-card--placeholder {

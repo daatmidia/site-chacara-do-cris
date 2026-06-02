@@ -62,6 +62,19 @@ if (galleryPickerSection) {
 const cerimoniaGalleryTriggers = document.querySelectorAll(".photo-gallery-trigger");
 
 if (cerimoniaGalleryTriggers.length > 0) {
+  document.querySelectorAll(".cerimonia-gallery-panel").forEach((panel) => {
+    if (panel.querySelector(".cerimonia-gallery-panel-close")) {
+      return;
+    }
+
+    const closeButton = document.createElement("button");
+    closeButton.type = "button";
+    closeButton.className = "cerimonia-gallery-panel-close";
+    closeButton.setAttribute("aria-label", "Fechar galeria");
+    closeButton.textContent = "×";
+    panel.prepend(closeButton);
+  });
+
   const closeCerimoniaPanels = () => {
     document.querySelectorAll(".cerimonia-gallery-panel").forEach((panel) => {
       panel.hidden = true;
@@ -71,6 +84,14 @@ if (cerimoniaGalleryTriggers.length > 0) {
       trigger.setAttribute("aria-expanded", "false");
     });
   };
+
+  document.querySelectorAll(".cerimonia-gallery-panel-close").forEach((closeButton) => {
+    closeButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      closeCerimoniaPanels();
+    });
+  });
 
   const toggleCerimoniaPanel = (trigger) => {
     const panelId = trigger.dataset.galleryPanel;
@@ -92,17 +113,34 @@ if (cerimoniaGalleryTriggers.length > 0) {
     }
   };
 
+  let lastTriggerActivation = 0;
+
+  const activateCerimoniaTrigger = (trigger, event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const now = Date.now();
+    if (now - lastTriggerActivation < 450) {
+      return;
+    }
+
+    lastTriggerActivation = now;
+    toggleCerimoniaPanel(trigger);
+  };
+
   cerimoniaGalleryTriggers.forEach((trigger) => {
-    trigger.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      toggleCerimoniaPanel(trigger);
+    trigger.addEventListener("pointerup", (event) => {
+      if (event.pointerType === "mouse" && event.button !== 0) {
+        return;
+      }
+
+      activateCerimoniaTrigger(trigger, event);
     });
 
     trigger.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
-        toggleCerimoniaPanel(trigger);
+        activateCerimoniaTrigger(trigger, event);
       }
     });
   });
@@ -120,4 +158,18 @@ if (cerimoniaGalleryTriggers.length > 0) {
       toggleCerimoniaPanel(trigger);
     }
   }
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || document.querySelector(".photo-modal.open")) {
+      return;
+    }
+
+    const hasOpenPanel = [...document.querySelectorAll(".cerimonia-gallery-panel")].some(
+      (panel) => !panel.hidden
+    );
+
+    if (hasOpenPanel) {
+      closeCerimoniaPanels();
+    }
+  });
 }
