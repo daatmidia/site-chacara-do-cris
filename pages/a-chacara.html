@@ -21,6 +21,11 @@
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
+  <div class="top-strip">
+    <div class="container top-strip-content">
+      <p>Chácara do Cris, há 12 anos transformando datas especiais em memórias eternas.</p>
+    </div>
+  </div>
   <header class="header">
     <div class="container nav-wrap">
       <div class="nav-brand-group">
@@ -30,10 +35,31 @@
         <a class="nav-mobile-home" href="../index.html">Início</a>
       </div>
       <span class="nav-mobile-bar">
-        <a class="nav-mobile-cta" href="../index.html#contato">Agendar visita gratuita</a>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mainNav">
+          <span class="menu-toggle-icon" aria-hidden="true"></span>
+        </button>
       </span>
-      <nav class="nav nav--compact">
-        <a href="../index.html">Início</a>
+      <div class="nav-backdrop" id="navBackdrop" aria-hidden="true"></div>
+      <nav class="nav" id="mainNav">
+        <div class="nav-dropdown">
+          <a href="./a-chacara.html" class="nav-dropdown-link">A Chácara</a>
+          <div class="nav-submenu" aria-label="Submenu de A Chácara">
+            <a href="./a-chacara.html#historia">Sobre Nós</a>
+            <a href="./a-chacara.html#estrutura">Estrutura</a>
+            <a href="./a-chacara.html#buffet">Buffet e Gastronomia</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <a href="./cerimonia-casamento.html" class="nav-dropdown-link">Eventos</a>
+          <div class="nav-submenu" aria-label="Submenu de Eventos">
+            <a href="./cerimonia-casamento.html">Espaço para Cerimônia/Festa de Casamento</a>
+            <a href="./festa-formatura-15-anos.html#formaturas">Formaturas</a>
+            <a href="./festa-15-anos-aniversarios.html#15-anos">15 Anos/Aniversários</a>
+            <a href="./festa-15-anos-aniversarios.html#corporativos">Eventos Corporativos</a>
+            <a href="./festa-15-anos-aniversarios.html#sociais">Eventos Sociais</a>
+          </div>
+        </div>
+        <a class="nav-como-chegar" href="./localizacao.html">Localização</a>
         <a class="nav-cta" href="../index.html#contato">Agendar visita gratuita</a>
       </nav>
     </div>
@@ -41,7 +67,7 @@
 
   <main>
     <section class="section section-highlight" id="espaco">
-      <div class="container split">
+      <div class="container">
         <div>
           <h2 id="historia">O Cenário Perfeito para Sua História</h2>
           <p>
@@ -57,30 +83,71 @@
             Venha se encantar com cada detalhe. Agende sua visita!
           </p>
         </div>
-        <div class="gallery-grid" aria-label="Galeria de fotos do espaço">
-          <figure class="photo">
-            <img src="../assets/cerimonia-ao-ar-livre.png" alt="Cerimônia de casamento ao ar livre na Chácara do Cris">
-            <figcaption>Cerimônia ao ar livre</figcaption>
-          </figure>
-          <figure class="photo">
-            <img src="../assets/deck/deck-01.png" alt="Deck na Chácara do Cris">
-            <figcaption>DECK</figcaption>
-          </figure>
-          <figure class="photo">
-            <img src="../assets/salao-de-festas.png" alt="Salão de festas decorado na Chácara do Cris">
-            <figcaption>Salão de Eventos</figcaption>
-          </figure>
-          <figure class="photo">
-            <img src="../assets/area-gourmet.png" alt="Área gourmet decorada para eventos na Chácara do Cris">
-            <figcaption>Área gourmet</figcaption>
-          </figure>
+        <div class="estrutura-gallery-block" aria-label="Galeria da estrutura">
+          <div class="estrutura-gallery-grid">
+            <figure class="photo photo-gallery-trigger" data-gallery-panel="fachada-gallery-panel" role="button" tabindex="0" aria-expanded="false" aria-controls="fachada-gallery-panel">
+              <img src="../assets/fachada/fachada-01.png" alt="Fachada da Chácara do Cris">
+              <figcaption>FACHADA</figcaption>
+            </figure>
+            <figure class="photo photo-gallery-trigger" data-gallery-panel="deck-coberto-gallery-panel" role="button" tabindex="0" aria-expanded="false" aria-controls="deck-coberto-gallery-panel">
+              <img src="../assets/deck/deck-coberto-01.png" alt="Deck coberto na Chácara do Cris">
+              <figcaption>DECK COBERTO</figcaption>
+            </figure>
+            <figure class="photo photo-gallery-trigger" data-gallery-panel="playground-gallery-panel" role="button" tabindex="0" aria-expanded="false" aria-controls="playground-gallery-panel">
+              <img src="../assets/playground/playground-01.png" alt="Playground na Chácara do Cris">
+              <figcaption>PLAYGROUND</figcaption>
+            </figure>
+            <figure class="photo">
+              <img src="../assets/estrutura/estrutura-deck-area-04.png" alt="Jardim e espaço para cerimônia ao ar livre na Chácara do Cris">
+              <figcaption>JARDIM</figcaption>
+            </figure>
+          </div>
+          <div class="cerimonia-gallery-panel" id="fachada-gallery-panel" hidden>
+            <p class="cerimonia-gallery-panel-title">FACHADA</p>
+            <div class="gallery-grid gallery-grid--deck-expanded" aria-label="Galeria da fachada">
+              <figure class="photo">
+                <img src="../assets/fachada/fachada-01.png" alt="Fachada da Chácara do Cris — vista frontal com vidro e pedra">
+              </figure>
+              <figure class="photo">
+                <img src="../assets/fachada/fachada-02.png" alt="Fachada da Chácara do Cris — vista do espaço entre a natureza">
+              </figure>
+              <figure class="photo">
+                <img src="../assets/fachada/fachada-03.png" alt="Fachada da Chácara do Cris — entrada em pedra e madeira">
+              </figure>
+            </div>
+          </div>
+          <div class="cerimonia-gallery-panel" id="deck-coberto-gallery-panel" hidden>
+            <p class="cerimonia-gallery-panel-title">DECK COBERTO</p>
+            <div class="gallery-grid gallery-grid--deck-expanded" aria-label="Galeria do deck coberto">
+              <figure class="photo">
+                <img src="../assets/deck/deck-coberto-01.png" alt="Deck coberto na Chácara do Cris — vista geral">
+              </figure>
+              <figure class="photo">
+                <img src="../assets/deck/deck-coberto-02.png" alt="Deck coberto na Chácara do Cris — iluminação e paisagismo">
+              </figure>
+              <figure class="photo">
+                <img src="../assets/deck/deck-coberto-03.png" alt="Deck coberto na Chácara do Cris — perspectiva do espaço">
+              </figure>
+              <figure class="photo">
+                <img src="../assets/deck/deck-coberto-04.png" alt="Deck coberto na Chácara do Cris — ambiente coberto">
+              </figure>
+            </div>
+          </div>
+          <div class="cerimonia-gallery-panel" id="playground-gallery-panel" hidden>
+            <p class="cerimonia-gallery-panel-title">PLAYGROUND</p>
+            <div class="gallery-grid gallery-grid--deck-expanded" aria-label="Galeria do playground">
+              <figure class="photo">
+                <img src="../assets/playground/playground-01.png" alt="Playground na Chácara do Cris — área de lazer infantil">
+              </figure>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="section section-highlight" id="diferenciais">
       <div class="container">
-        <h2>Por que escolher a Chácara do Cris</h2>
+        <h2 class="section-title-green">Por que escolher a Chácara do Cris:</h2>
         <div class="cards">
           <article class="card">
             <h3>Atendimento consultivo</h3>
@@ -100,40 +167,46 @@
           </article>
         </div>
 
-        <div class="estrutura-block">
-          <h3 class="estrutura-title">Estrutura que oferecemos</h3>
-          <p class="estrutura-intro">
-            O Espaço Callisia foi projetado para proporcionar experiências únicas, unindo natureza, conforto e sofisticação. Cada ambiente foi pensado para valorizar momentos especiais e tornar seu evento inesquecível.
-          </p>
+        <div class="estrutura-block" id="estrutura">
+          <div class="estrutura-head">
+            <h3 class="estrutura-title section-title-green">Estrutura que oferecemos:</h3>
+            <p class="estrutura-intro">
+              O Espaço Callisia foi projetado para proporcionar experiências únicas, unindo natureza, conforto e sofisticação. Cada ambiente foi pensado para valorizar momentos especiais e tornar seu evento inesquecível.
+            </p>
+            <div class="estrutura-kpis" aria-label="Resumo da estrutura">
+              <article class="estrutura-kpi">
+                <strong>Capacidade</strong>
+                <span>Até 280 convidados</span>
+              </article>
+              <article class="estrutura-kpi">
+                <strong>Deck Coberto</strong>
+                <span>120 pessoas sentadas</span>
+              </article>
+              <article class="estrutura-kpi">
+                <strong>Estacionamento</strong>
+                <span>80 carros + acessibilidade</span>
+              </article>
+            </div>
+          </div>
           <div class="estrutura-groups" aria-label="Itens da estrutura oferecida">
             <section class="estrutura-group">
               <h4 class="estrutura-group-title">Externo</h4>
               <ul class="estrutura-grid">
-                <li>Camarim</li>
-                <li>Estacionamento para 80 carros com vagas de acessibilidade</li>
-                <li>Rampa acessível de acesso ao deck e salão</li>
-                <li>Deck para até 120 pessoas sentadas</li>
-                <li>120 cadeiras Tiffany de ferro</li>
-                <li>110 cadeiras Tiffany douradas</li>
+                <li><strong>Camarim</strong><span>Ambiente reservado para preparação com conforto.</span></li>
+                <li><strong>Estacionamento</strong><span>80 carros com vagas de acessibilidade.</span></li>
+                <li><strong>Acessibilidade</strong><span>Rampa de acesso ao deck e ao salão.</span></li>
+                <li><strong>Deck Coberto</strong><span>Capacidade para até 120 pessoas sentadas.</span></li>
+                <li><strong>Cadeiras Tiffany</strong><span>120 em ferro e 110 douradas.</span></li>
               </ul>
             </section>
             <section class="estrutura-group">
               <h4 class="estrutura-group-title">Interno</h4>
               <ul class="estrutura-grid">
-                <li>Climatização</li>
-                <li>Gerador 8 KWA</li>
-                <li>Sala de apoio</li>
-                <li>Banheiros feminino, masculino e acessível</li>
-                <li>150 cadeiras Paris</li>
-                <li>9 mesas redondas</li>
-                <li>12 mesas retangulares</li>
-                <li>Telão de LED</li>
-                <li>Sistema de som</li>
-                <li>Iluminação interna completa</li>
-                <li>Pratos de porcelana</li>
-                <li>Talheres de metal</li>
-                <li>Taças de vidro para água, refrigerante e cerveja</li>
-                <li>Taças de vidro para espumante</li>
+                <li><strong>Conforto e operação</strong><span>Climatização, gerador 125KWA, sala de apoio e banheiros feminino, masculino e acessível.</span></li>
+                <li><strong>Mobiliário</strong><span>150 cadeiras Paris, 9 mesas redondas e 12 mesas retangulares.</span></li>
+                <li><strong>Audiovisual</strong><span>Telão de LED, sistema de som e iluminação interna completa.</span></li>
+                <li><strong>Mesa posta</strong><span>Pratos de porcelana e talheres de metal.</span></li>
+                <li><strong>Taças de vidro</strong><span>Modelos para água, refrigerante, cerveja e espumante.</span></li>
               </ul>
             </section>
           </div>
@@ -143,7 +216,7 @@
 
     <section class="section" id="pacotes">
       <div class="container">
-        <h2>Pacotes para seu evento</h2>
+        <h2 class="section-title-green">Pacotes para seu evento:</h2>
         <p class="section-intro">Escolha o formato ideal e personalize com os complementos que desejar.</p>
         <div class="cards pricing-cards">
           <article class="card pricing-card">
@@ -180,10 +253,10 @@
             <a class="btn btn-secondary" href="../index.html#contato">Agendar visita técnica</a>
           </article>
         </div>
-        <div class="buffet-section">
+        <div class="buffet-section" id="buffet">
           <header class="buffet-header">
             <p class="buffet-eyebrow">Gastronomia da casa</p>
-            <h2>Opções de buffet</h2>
+            <h2 class="section-title-green">Opções de buffet:</h2>
             <p class="buffet-lead">
               Experiência completa para o seu evento: entradas de boas-vindas, buffet principal com duas opções de cardápio e lanche da madrugada para encerrar a festa com estilo.
             </p>
@@ -312,5 +385,6 @@
   </a>
 
   <script src="../js/main.js"></script>
+  <script src="../js/cerimonia-galerias.js"></script>
 </body>
 </html>

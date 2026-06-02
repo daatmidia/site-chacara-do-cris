@@ -63,6 +63,15 @@ const cerimoniaGalleryTriggers = document.querySelectorAll(".photo-gallery-trigg
 
 if (cerimoniaGalleryTriggers.length > 0) {
   document.querySelectorAll(".cerimonia-gallery-panel").forEach((panel) => {
+    const expandedGrid = panel.querySelector(".gallery-grid--deck-expanded");
+
+    if (expandedGrid && !panel.querySelector(".gallery-scroll-hint")) {
+      const hint = document.createElement("p");
+      hint.className = "gallery-scroll-hint";
+      hint.textContent = "Deslize para o lado para ver todas as fotos →";
+      panel.querySelector(".cerimonia-gallery-panel-title")?.insertAdjacentElement("afterend", hint);
+    }
+
     if (panel.querySelector(".cerimonia-gallery-panel-close")) {
       return;
     }
@@ -129,13 +138,16 @@ if (cerimoniaGalleryTriggers.length > 0) {
   };
 
   cerimoniaGalleryTriggers.forEach((trigger) => {
-    trigger.addEventListener("pointerup", (event) => {
-      if (event.pointerType === "mouse" && event.button !== 0) {
+    const handleTriggerActivate = (event) => {
+      if (event.type === "pointerup" && event.pointerType === "mouse" && event.button !== 0) {
         return;
       }
 
       activateCerimoniaTrigger(trigger, event);
-    });
+    };
+
+    trigger.addEventListener("pointerup", handleTriggerActivate);
+    trigger.addEventListener("click", handleTriggerActivate);
 
     trigger.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
@@ -147,15 +159,33 @@ if (cerimoniaGalleryTriggers.length > 0) {
 
   const hashPanels = {
     "#deck": "deck-gallery-panel",
-    "#cerimonia-ar-livre": "cerimonia-ar-livre-gallery-panel"
+    "#salao-de-eventos": "salao-eventos-gallery-panel",
+    "#cerimonia-ar-livre": "cerimonia-ar-livre-gallery-panel",
+    "#lounge-de-vidro": "lounge-de-vidro-gallery-panel",
+    "#15-anos": "quinze-anos-gallery-panel",
+    "#formaturas": "salao-festas-gallery-panel"
   };
 
   const panelId = hashPanels[window.location.hash];
 
   if (panelId) {
     const trigger = document.querySelector(`[data-gallery-panel="${panelId}"]`);
+
     if (trigger) {
       toggleCerimoniaPanel(trigger);
+    }
+  }
+
+  const hashCards = {
+    "#corporativos": "corporativos",
+    "#sociais": "sociais"
+  };
+  const cardId = hashCards[window.location.hash];
+  if (cardId) {
+    const card = document.getElementById(cardId);
+    if (card) {
+      closeCerimoniaPanels();
+      card.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
   }
 

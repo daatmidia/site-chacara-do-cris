@@ -21,6 +21,11 @@
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
+  <div class="top-strip">
+    <div class="container top-strip-content">
+      <p>Chácara do Cris, há 12 anos transformando datas especiais em memórias eternas.</p>
+    </div>
+  </div>
   <header class="header">
     <div class="container nav-wrap">
       <div class="nav-brand-group">
@@ -30,10 +35,31 @@
         <a class="nav-mobile-home" href="../index.html">Início</a>
       </div>
       <span class="nav-mobile-bar">
-        <a class="nav-mobile-cta" href="../index.html#contato">Agendar visita gratuita</a>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mainNav">
+          <span class="menu-toggle-icon" aria-hidden="true"></span>
+        </button>
       </span>
-      <nav class="nav nav--compact">
-        <a href="../index.html">Início</a>
+      <div class="nav-backdrop" id="navBackdrop" aria-hidden="true"></div>
+      <nav class="nav" id="mainNav">
+        <div class="nav-dropdown">
+          <a href="./a-chacara.html" class="nav-dropdown-link">A Chácara</a>
+          <div class="nav-submenu" aria-label="Submenu de A Chácara">
+            <a href="./a-chacara.html#historia">Sobre Nós</a>
+            <a href="./a-chacara.html#estrutura">Estrutura</a>
+            <a href="./a-chacara.html#buffet">Buffet e Gastronomia</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <a href="./cerimonia-casamento.html" class="nav-dropdown-link">Eventos</a>
+          <div class="nav-submenu" aria-label="Submenu de Eventos">
+            <a href="./cerimonia-casamento.html">Espaço para Cerimônia/Festa de Casamento</a>
+            <a href="./festa-formatura-15-anos.html#formaturas">Formaturas</a>
+            <a href="./festa-15-anos-aniversarios.html#15-anos">15 Anos/Aniversários</a>
+            <a href="./festa-15-anos-aniversarios.html#corporativos">Eventos Corporativos</a>
+            <a href="./festa-15-anos-aniversarios.html#sociais">Eventos Sociais</a>
+          </div>
+        </div>
+        <a class="nav-como-chegar" href="./localizacao.html">Localização</a>
         <a class="nav-cta" href="../index.html#contato">Agendar visita gratuita</a>
       </nav>
     </div>

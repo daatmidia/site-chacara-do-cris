@@ -2,10 +2,11 @@ const menuToggle = document.querySelector("#menuToggle");
 const mainNav = document.querySelector("#mainNav");
 const navBackdrop = document.querySelector("#navBackdrop");
 const contactForm = document.querySelector("#contactForm");
-const heroSlides = document.querySelectorAll(".hero-slide");
-const heroPrev = document.querySelector(".hero-arrow-prev");
-const heroNext = document.querySelector(".hero-arrow-next");
-const heroMedia = document.querySelector(".hero-media");
+const heroLayout = document.querySelector(".hero-layout");
+const heroSlides = heroLayout ? heroLayout.querySelectorAll(".hero-slide") : [];
+const heroPrev = heroLayout?.querySelector(".hero-arrow-prev");
+const heroNext = heroLayout?.querySelector(".hero-arrow-next");
+const heroMedia = heroLayout?.querySelector(".hero-media");
 const heroTitle = document.querySelector("#heroTitle");
 const heroDescription = document.querySelector("#heroDescription");
 const heroCopy = document.querySelector(".hero-copy");
@@ -382,15 +383,34 @@ if (heroMedia || galleryImages.length > 0) {
       alt: image.alt || "Foto ampliada"
     }));
 
+  const galleryContainerSelector =
+    ".gallery-grid--deck-expanded, .gallery-grid, .estrutura-gallery-grid";
+
   const getGalleryContainer = (image) => {
     const panel = image.closest(".cerimonia-gallery-panel, .gallery-view-panel");
-    const panelGrid = panel?.querySelector(".gallery-grid--deck-expanded, .gallery-grid");
+    const panelGrid = panel?.querySelector(galleryContainerSelector);
 
     if (panelGrid) {
       return panelGrid;
     }
 
-    return image.closest(".gallery-grid--deck-expanded, .gallery-grid");
+    return image.closest(galleryContainerSelector);
+  };
+
+  const getGalleryImageFromEvent = (event) => {
+    const directImage = event.target.closest(
+      `.photo img, .gallery-grid img, .estrutura-gallery-grid img`
+    );
+
+    if (directImage) {
+      return directImage;
+    }
+
+    const photo = event.target.closest(
+      ".estrutura-gallery-grid .photo, .gallery-grid .photo:not(.photo-gallery-trigger)"
+    );
+
+    return photo?.querySelector("img") ?? null;
   };
 
   const openPhotoFromImage = (image) => {
@@ -444,31 +464,25 @@ if (heroMedia || galleryImages.length > 0) {
     });
   }
 
-  document.addEventListener(
-    "pointerup",
-    (event) => {
-      const image = event.target.closest(".photo img, .gallery-grid img");
+  const activateGalleryImage = (event) => {
+    const image = getGalleryImageFromEvent(event);
 
-      if (!image || image.closest(".photo-gallery-trigger")) {
-        return;
-      }
+    if (!image || image.closest(".photo-gallery-trigger")) {
+      return;
+    }
 
-      if (event.pointerType === "mouse" && event.button !== 0) {
-        return;
-      }
+    const now = Date.now();
+    if (now - lastImageActivation < 450) {
+      return;
+    }
 
-      const now = Date.now();
-      if (now - lastImageActivation < 450) {
-        return;
-      }
+    lastImageActivation = now;
+    event.preventDefault();
+    event.stopPropagation();
+    openPhotoFromImage(image);
+  };
 
-      lastImageActivation = now;
-      event.preventDefault();
-      event.stopPropagation();
-      openPhotoFromImage(image);
-    },
-    true
-  );
+  document.addEventListener("click", activateGalleryImage, true);
 
   modalClose?.addEventListener("click", (event) => {
     event.stopPropagation();
