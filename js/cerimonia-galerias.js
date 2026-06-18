@@ -163,6 +163,7 @@ if (cerimoniaGalleryTriggers.length > 0) {
     "#cerimonia-ar-livre": "cerimonia-ar-livre-gallery-panel",
     "#lounge-de-vidro": "lounge-de-vidro-gallery-panel",
     "#15-anos": "quinze-anos-gallery-panel",
+    "#aniversarios": "aniversarios-gallery-panel",
     "#formaturas": "salao-festas-gallery-panel"
   };
 
