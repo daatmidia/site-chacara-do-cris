@@ -3971,6 +3971,15 @@ textarea:focus {
 }
 
 @media (min-width: 981px) {
+  .hero-copy,
+  .hero-copy .eyebrow,
+  .hero-copy h1,
+  .hero-copy p {
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   .cerimonia-gallery-bar {
     padding: clamp(1.25rem, 2vw, 1.75rem) 0 clamp(1.5rem, 2.5vw, 2.25rem);
   }
