@@ -313,8 +313,9 @@ if (heroSlides.length > 1) {
 }
 
 const galleryImages = document.querySelectorAll(".photo img");
+const aboutCarouselExists = Boolean(document.querySelector("[data-about-carousel]"));
 
-if (heroMedia || galleryImages.length > 0) {
+if (heroMedia || galleryImages.length > 0 || aboutCarouselExists) {
   const modal = document.createElement("div");
   modal.className = "photo-modal";
   modal.setAttribute("aria-hidden", "true");
@@ -327,7 +328,7 @@ if (heroMedia || galleryImages.length > 0) {
     <button class="photo-modal-arrow photo-modal-next" type="button" aria-label="Ver próxima foto">›</button>
     <p class="photo-modal-counter" aria-live="polite"></p>
     <img class="photo-modal-img" alt="">
-  `;
+`;
   document.body.appendChild(modal);
 
   const modalImage = modal.querySelector(".photo-modal-img");
@@ -378,6 +379,8 @@ if (heroMedia || galleryImages.length > 0) {
     modal.setAttribute("aria-hidden", "false");
     document.body.classList.add("modal-open");
   };
+
+  window.openSitePhotoGallery = openPhotoGallery;
 
   const closePhotoModal = () => {
     modal.classList.remove("open");
@@ -599,6 +602,315 @@ if (heroMedia || galleryImages.length > 0) {
 
   updateModalControls();
 }
+
+const initAboutCarousel = (viewport) => {
+  const track = viewport.querySelector(".about-carousel-track");
+  if (!track) {
+    return;
+  }
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const originalCards = Array.from(track.children);
+
+  if (!originalCards.length) {
+    return;
+  }
+
+  // Duplicate the set so the strip can loop endlessly.
+  originalCards.forEach((card) => {
+    track.appendChild(card.cloneNode(true));
+  });
+
+  let offset = 0;
+  let loopWidth = 0;
+  let isDragging = false;
+  let dragMoved = false;
+  let startX = 0;
+  let startOffset = 0;
+  let lastX = 0;
+  let lastTime = 0;
+  let velocity = 0;
+  let resumeTimeout = 0;
+  let autoplayPaused = prefersReducedMotion;
+  let pointerId = null;
+  let pointerDownCard = null;
+  const autoSpeed = 0.75;
+
+  const measureLoopWidth = () => {
+    const styles = window.getComputedStyle(track);
+    const gap = Number.parseFloat(styles.columnGap || styles.gap) || 0;
+    let width = 0;
+
+    originalCards.forEach((card, index) => {
+      width += card.getBoundingClientRect().width;
+      if (index < originalCards.length - 1) {
+        width += gap;
+      }
+    });
+
+    // Include one trailing gap between the original set and its clone.
+    loopWidth = width + gap;
+  };
+
+  const normalizeOffset = () => {
+    if (!loopWidth) {
+      return;
+    }
+
+    while (offset <= -loopWidth) {
+      offset += loopWidth;
+    }
+
+    while (offset > 0) {
+      offset -= loopWidth;
+    }
+  };
+
+  const render = () => {
+    track.style.transform = `translate3d(${offset}px, 0, 0)`;
+  };
+
+  const pauseAutoplayTemporarily = (delay = 2400) => {
+    autoplayPaused = true;
+    window.clearTimeout(resumeTimeout);
+
+    if (prefersReducedMotion) {
+      return;
+    }
+
+    resumeTimeout = window.setTimeout(() => {
+      if (!isDragging) {
+        autoplayPaused = false;
+      }
+    }, delay);
+  };
+
+  const onPointerDown = (event) => {
+    if (event.pointerType === "mouse" && event.button !== 0) {
+      return;
+    }
+
+    isDragging = true;
+    dragMoved = false;
+    pointerId = event.pointerId;
+    pointerDownCard = event.target?.closest?.(".about-carousel-card") || null;
+    startX = event.clientX;
+    lastX = event.clientX;
+    lastTime = performance.now();
+    startOffset = offset;
+    velocity = 0;
+    autoplayPaused = true;
+    viewport.classList.add("is-dragging");
+
+    try {
+      viewport.setPointerCapture(event.pointerId);
+    } catch (_error) {
+      // Some browsers may reject capture during rapid gestures.
+    }
+
+    event.preventDefault();
+  };
+
+  const onPointerMove = (event) => {
+    if (!isDragging || (pointerId !== null && event.pointerId !== pointerId)) {
+      return;
+    }
+
+    const deltaX = event.clientX - startX;
+    if (Math.abs(deltaX) > 8) {
+      dragMoved = true;
+    }
+
+    const now = performance.now();
+    const dt = Math.max(now - lastTime, 1);
+    velocity = ((event.clientX - lastX) / dt) * 16;
+    lastX = event.clientX;
+    lastTime = now;
+
+    offset = startOffset + deltaX;
+    normalizeOffset();
+    render();
+    event.preventDefault();
+  };
+
+  const finishDrag = (event, { allowOpen = true } = {}) => {
+    if (!isDragging || (pointerId !== null && event.pointerId !== pointerId)) {
+      return;
+    }
+
+    const shouldOpenPhoto = allowOpen && !dragMoved;
+    const targetCard =
+      event.target?.closest?.(".about-carousel-card") || pointerDownCard;
+
+    isDragging = false;
+    pointerId = null;
+    viewport.classList.remove("is-dragging");
+
+    try {
+      if (viewport.hasPointerCapture?.(event.pointerId)) {
+        viewport.releasePointerCapture(event.pointerId);
+      }
+    } catch (_error) {
+      // Ignore release errors.
+    }
+
+    if (shouldOpenPhoto && targetCard && viewport.contains(targetCard)) {
+      openCarouselPhoto(targetCard);
+      return;
+    }
+
+    if (Math.abs(velocity) > 0.35) {
+      const applyInertia = () => {
+        if (Math.abs(velocity) < 0.05 || isDragging) {
+          pauseAutoplayTemporarily();
+          return;
+        }
+
+        offset += velocity;
+        velocity *= 0.94;
+        normalizeOffset();
+        render();
+        requestAnimationFrame(applyInertia);
+      };
+
+      requestAnimationFrame(applyInertia);
+    } else {
+      pauseAutoplayTemporarily();
+    }
+  };
+
+  const galleryItems = originalCards
+    .map((card) => {
+      const image = card.querySelector("img");
+      if (!image) {
+        return null;
+      }
+
+      return {
+        src: image.getAttribute("src") || image.currentSrc || image.src,
+        alt: image.alt || "Foto ampliada da Chácara do Cris"
+      };
+    })
+    .filter(Boolean);
+
+  const openCarouselPhoto = (card) => {
+    if (!window.openSitePhotoGallery || !galleryItems.length) {
+      return;
+    }
+
+    const image = card.querySelector("img");
+    const src = image?.getAttribute("src") || image?.currentSrc || image?.src;
+    let startIndex = galleryItems.findIndex((item) => item.src === src);
+
+    if (startIndex < 0) {
+      const fileName = src?.split("/").pop();
+      startIndex = galleryItems.findIndex((item) => item.src.split("/").pop() === fileName);
+    }
+
+    startIndex = Math.max(0, startIndex);
+    pauseAutoplayTemporarily(4000);
+    window.openSitePhotoGallery(galleryItems, startIndex);
+  };
+
+  track.querySelectorAll(".about-carousel-card").forEach((card) => {
+    card.setAttribute("role", "button");
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("aria-label", "Ampliar foto");
+  });
+
+  viewport.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") {
+      return;
+    }
+
+    const card = event.target.closest(".about-carousel-card");
+    if (!card || !viewport.contains(card)) {
+      return;
+    }
+
+    event.preventDefault();
+    openCarouselPhoto(card);
+  });
+
+  const tick = () => {
+    if (!autoplayPaused && !isDragging) {
+      offset -= autoSpeed;
+      normalizeOffset();
+      render();
+    }
+
+    requestAnimationFrame(tick);
+  };
+
+  viewport.addEventListener("pointerdown", onPointerDown, { passive: false });
+  viewport.addEventListener("pointermove", onPointerMove, { passive: false });
+  viewport.addEventListener("pointerup", (event) => finishDrag(event, { allowOpen: true }));
+  viewport.addEventListener("pointercancel", (event) => finishDrag(event, { allowOpen: false }));
+  viewport.addEventListener("pointerleave", (event) => {
+    if (isDragging) {
+      finishDrag(event, { allowOpen: false });
+    }
+  });
+
+  viewport.addEventListener(
+    "wheel",
+    (event) => {
+      const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+      if (!delta) {
+        return;
+      }
+
+      offset -= delta;
+      normalizeOffset();
+      render();
+      pauseAutoplayTemporarily();
+      event.preventDefault();
+    },
+    { passive: false }
+  );
+
+  window.addEventListener(
+    "resize",
+    () => {
+      measureLoopWidth();
+      normalizeOffset();
+      render();
+    },
+    { passive: true }
+  );
+
+  // Wait a frame so layout/images settle before measuring.
+  requestAnimationFrame(() => {
+    measureLoopWidth();
+    normalizeOffset();
+    render();
+
+    if (!prefersReducedMotion) {
+      requestAnimationFrame(tick);
+    }
+  });
+
+  // Remeasure after images load.
+  track.querySelectorAll("img").forEach((img) => {
+    if (img.complete) {
+      return;
+    }
+
+    img.addEventListener(
+      "load",
+      () => {
+        measureLoopWidth();
+        normalizeOffset();
+        render();
+      },
+      { once: true }
+    );
+  });
+};
+
+document.querySelectorAll("[data-about-carousel]").forEach((viewport) => {
+  initAboutCarousel(viewport);
+});
 
 const revealItems = document.querySelectorAll(".reveal");
 

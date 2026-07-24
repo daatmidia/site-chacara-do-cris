@@ -1,50 +1,64 @@
-    <section class="section reveal" id="contato">
+    <section class="section quote-section reveal" id="contato">
       <div class="container">
         <div id="contactFormWrap">
-          <h2>Vamos conversar sobre o seu evento?</h2>
-          <p class="section-intro">Preencha abaixo e retornaremos em até 24h com disponibilidade e proposta personalizada sem compromisso.</p>
-          <form id="contactForm" class="form" data-whatsapp="5549998009688" data-default-tipo="">
-            <label for="nome">Nome completo</label>
-            <input id="nome" name="nome" type="text" required autocomplete="name">
+        <div class="quote-layout">
+<div class="quote-copy">
+            <h2>Peça um orçamento</h2>
+            <p class="section-intro">Possui dúvidas ou gostaria de realizar um orçamento?</p>
+            <p class="section-intro">Preencha o formulário para entrar em contato conosco.</p>
+          </div>
+          <div class="quote-form-panel">
+            <form id="contactForm" class="form quote-form" data-whatsapp="5549998009688">
+              <label class="sr-only" for="nome">Nome completo</label>
+              <input id="nome" name="nome" type="text" required autocomplete="name" placeholder="Nome Completo">
 
-            <label for="email">E-mail</label>
-            <input id="email" name="email" type="email" required autocomplete="email">
+              <label class="sr-only" for="email">E-mail</label>
+              <input id="email" name="email" type="email" required autocomplete="email" placeholder="Email">
 
-            <label for="telefone">Telefone/WhatsApp</label>
-            <input id="telefone" name="telefone" type="tel" required autocomplete="tel">
+              <label class="sr-only" for="telefone">WhatsApp</label>
+              <input id="telefone" name="telefone" type="tel" required autocomplete="tel" placeholder="Whatsapp (DDD+número)">
 
-            <label for="tipo">Tipo de evento</label>
-            <select id="tipo" name="tipo" required>
-              <option value="">Selecione</option>
-              <option value="Casamento">Casamento</option>
-              <option value="15 anos">15 anos</option>
-              <option value="Aniversário">Aniversário</option>
-              <option value="Formatura">Formatura</option>
-              <option value="Corporativo">Corporativo</option>
-              <option value="Outro">Outro</option>
-            </select>
+              <label class="sr-only" for="tipo">Escolha seu evento</label>
+              <select id="tipo" name="tipo" required>
+                <option value="">Escolha seu evento</option>
+                <option value="Casamento">Casamento</option>
+                <option value="15 anos">15 anos</option>
+                <option value="Aniversário">Aniversário</option>
+                <option value="Formatura">Formatura</option>
+                <option value="Corporativo">Corporativo</option>
+                <option value="Outro">Outro</option>
+              </select>
 
-            <label for="data">Data desejada</label>
-            <input id="data" name="data" type="date" required>
+              <label class="sr-only" for="origem">Como nos conheceu?</label>
+              <select id="origem" name="origem" required>
+                <option value="">Como nos conheceu?</option>
+                <option value="Instagram">Instagram</option>
+                <option value="Google">Google</option>
+                <option value="Indicação">Indicação de amigo ou familiar</option>
+                <option value="Já conhecia o espaço">Já conhecia o espaço</option>
+                <option value="Outro">Outro</option>
+              </select>
 
-            <label for="convidados">Número de convidados</label>
-            <input id="convidados" name="convidados" type="number" min="1" max="500" placeholder="Ex.: 150" required>
+              <div class="form-row form-row-2">
+                <div>
+                  <label class="sr-only" for="data">Data desejada</label>
+                  <input id="data" name="data" type="date" required aria-label="Data desejada">
+                </div>
+                <div>
+                  <label class="sr-only" for="convidados">Número de convidados</label>
+                  <input id="convidados" name="convidados" type="number" min="1" max="500" placeholder="Número de convidados" required>
+                </div>
+              </div>
 
-            <label for="origem">Como nos conheceu?</label>
-            <select id="origem" name="origem" required>
-              <option value="">Selecione</option>
-              <option value="Instagram">Instagram</option>
-              <option value="Google">Google</option>
-              <option value="Indicação">Indicação de amigo ou familiar</option>
-              <option value="Já conhecia o espaço">Já conhecia o espaço</option>
-              <option value="Outro">Outro</option>
-            </select>
+              <label class="sr-only" for="mensagem">Detalhes do evento</label>
+              <textarea id="mensagem" name="mensagem" rows="4" placeholder="Conte mais detalhes sobre seu evento"></textarea>
 
-            <label for="mensagem">Mensagem</label>
-            <textarea id="mensagem" name="mensagem" rows="5" placeholder="Conte um pouco sobre seu evento..."></textarea>
+              <button class="btn btn-quote-submit" type="submit">Fazer um orçamento</button>
+            </form>
 
-            <button class="btn btn-primary btn-form-submit btn-green-pulse" type="submit">Verificar disponibilidade da minha data →</button>
-          </form>
+          </div>
+        </div>
+        <div class="quote-extras">
           <p class="form-trust-note">✔ Respondemos em até 24h úteis · Seus dados são confidenciais e não serão compartilhados</p>
           <div class="contact-divider" aria-hidden="true"><span>ou</span></div>
           <a
@@ -62,6 +76,7 @@
             </span>
           </a>
         </div>
+      </div>
         <div id="contactFormSuccess" class="contact-form-success" hidden>
           <h2>Obrigado por confiar na Chácara do Cris!</h2>
           <p class="contact-form-success-lead">

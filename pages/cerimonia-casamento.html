@@ -17,8 +17,8 @@
   <title>Espaço para Cerimônia/Festa de Casamento | Chácara do Cris</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css?v=20260724z">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -41,12 +41,16 @@
       <div class="nav-brand-group">
         <a class="brand" href="../index.html#inicio" aria-label="Chácara do Cris — início">
           <img class="brand-logo" src="../assets/logo-chacara-do-cris.png" alt="Chácara do Cris" width="116" height="116">
+          <span class="brand-copy">
+            <strong>CHÁCARA DO CRIS</strong>
+            <small>Eventos com sofisticação, natureza e excelência.</small>
+          </span>
         </a>
         <a class="nav-mobile-home" href="../index.html#inicio">Início</a>
       </div>
       <span class="nav-mobile-bar">
         <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mainNav">
-          <span class="menu-toggle-icon" aria-hidden="true"></span>
+          <span class="menu-toggle-label">MENU</span>
         </button>
       </span>
       <div class="nav-backdrop" id="navBackdrop" aria-hidden="true"></div>
@@ -70,7 +74,6 @@
           </div>
         </div>
         <a class="nav-como-chegar" href="./localizacao.html">Localização</a>
-        <a class="nav-cta" href="#contato">Agendar visita gratuita</a>
       </nav>
     </div>
   </header>
@@ -257,53 +260,92 @@
         </div>
       </div>
     </section>
-    <section class="section reveal" id="contato">
+
+    <section class="section reveal" id="faq">
+      <div class="container">
+        <h2>Perguntas frequentes</h2>
+        <div class="faq-list">
+          <details>
+            <summary>Qual a capacidade máxima do espaço?</summary>
+            <p>Até 280 convidados com conforto, variando conforme o tipo de layout escolhido.</p>
+          </details>
+          <details>
+            <summary>Posso levar meus fornecedores?</summary>
+            <p>Sim. Também trabalhamos com parceiros recomendados para facilitar sua organização.</p>
+          </details>
+          <details>
+            <summary>Vocês oferecem suporte no dia do evento?</summary>
+            <p>Oferecemos opções com coordenação e suporte operacional para sua experiência ser tranquila.</p>
+          </details>
+          <details>
+            <summary>Como faço para reservar a data?</summary>
+            <p>Envie o formulário ou fale via WhatsApp para verificar disponibilidade e receber proposta.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section quote-section reveal" id="contato">
       <div class="container">
         <div id="contactFormWrap">
-          <h2>Vamos conversar sobre o seu evento?</h2>
-          <p class="section-intro">Preencha abaixo e retornaremos em até 24h com disponibilidade e proposta personalizada sem compromisso.</p>
-          <form id="contactForm" class="form" data-whatsapp="5549998009688" data-default-tipo="Casamento">
-            <label for="nome">Nome completo</label>
-            <input id="nome" name="nome" type="text" required autocomplete="name">
+        <div class="quote-layout">
+<div class="quote-copy">
+            <h2>Peça um orçamento</h2>
+            <p class="section-intro">Possui dúvidas ou gostaria de realizar um orçamento?</p>
+            <p class="section-intro">Preencha o formulário para entrar em contato conosco.</p>
+          </div>
+          <div class="quote-form-panel">
+            <form id="contactForm" class="form quote-form" data-whatsapp="5549998009688" data-default-tipo="Casamento">
+              <label class="sr-only" for="nome">Nome completo</label>
+              <input id="nome" name="nome" type="text" required autocomplete="name" placeholder="Nome Completo">
 
-            <label for="email">E-mail</label>
-            <input id="email" name="email" type="email" required autocomplete="email">
+              <label class="sr-only" for="email">E-mail</label>
+              <input id="email" name="email" type="email" required autocomplete="email" placeholder="Email">
 
-            <label for="telefone">Telefone/WhatsApp</label>
-            <input id="telefone" name="telefone" type="tel" required autocomplete="tel">
+              <label class="sr-only" for="telefone">WhatsApp</label>
+              <input id="telefone" name="telefone" type="tel" required autocomplete="tel" placeholder="Whatsapp (DDD+número)">
 
-            <label for="tipo">Tipo de evento</label>
-            <select id="tipo" name="tipo" required>
-              <option value="">Selecione</option>
-              <option value="Casamento">Casamento</option>
-              <option value="15 anos">15 anos</option>
-              <option value="Aniversário">Aniversário</option>
-              <option value="Formatura">Formatura</option>
-              <option value="Corporativo">Corporativo</option>
-              <option value="Outro">Outro</option>
-            </select>
+              <label class="sr-only" for="tipo">Escolha seu evento</label>
+              <select id="tipo" name="tipo" required>
+                <option value="">Escolha seu evento</option>
+                <option value="Casamento">Casamento</option>
+                <option value="15 anos">15 anos</option>
+                <option value="Aniversário">Aniversário</option>
+                <option value="Formatura">Formatura</option>
+                <option value="Corporativo">Corporativo</option>
+                <option value="Outro">Outro</option>
+              </select>
 
-            <label for="data">Data desejada</label>
-            <input id="data" name="data" type="date" required>
+              <label class="sr-only" for="origem">Como nos conheceu?</label>
+              <select id="origem" name="origem" required>
+                <option value="">Como nos conheceu?</option>
+                <option value="Instagram">Instagram</option>
+                <option value="Google">Google</option>
+                <option value="Indicação">Indicação de amigo ou familiar</option>
+                <option value="Já conhecia o espaço">Já conhecia o espaço</option>
+                <option value="Outro">Outro</option>
+              </select>
 
-            <label for="convidados">Número de convidados</label>
-            <input id="convidados" name="convidados" type="number" min="1" max="500" placeholder="Ex.: 150" required>
+              <div class="form-row form-row-2">
+                <div>
+                  <label class="sr-only" for="data">Data desejada</label>
+                  <input id="data" name="data" type="date" required aria-label="Data desejada">
+                </div>
+                <div>
+                  <label class="sr-only" for="convidados">Número de convidados</label>
+                  <input id="convidados" name="convidados" type="number" min="1" max="500" placeholder="Número de convidados" required>
+                </div>
+              </div>
 
-            <label for="origem">Como nos conheceu?</label>
-            <select id="origem" name="origem" required>
-              <option value="">Selecione</option>
-              <option value="Instagram">Instagram</option>
-              <option value="Google">Google</option>
-              <option value="Indicação">Indicação de amigo ou familiar</option>
-              <option value="Já conhecia o espaço">Já conhecia o espaço</option>
-              <option value="Outro">Outro</option>
-            </select>
+              <label class="sr-only" for="mensagem">Detalhes do evento</label>
+              <textarea id="mensagem" name="mensagem" rows="4" placeholder="Conte mais detalhes sobre seu evento"></textarea>
 
-            <label for="mensagem">Mensagem</label>
-            <textarea id="mensagem" name="mensagem" rows="5" placeholder="Conte um pouco sobre seu evento..."></textarea>
+              <button class="btn btn-quote-submit" type="submit">Fazer um orçamento</button>
+            </form>
 
-            <button class="btn btn-primary btn-form-submit btn-green-pulse" type="submit">Verificar disponibilidade da minha data →</button>
-          </form>
+          </div>
+        </div>
+        <div class="quote-extras">
           <p class="form-trust-note">✔ Respondemos em até 24h úteis · Seus dados são confidenciais e não serão compartilhados</p>
           <div class="contact-divider" aria-hidden="true"><span>ou</span></div>
           <a
@@ -321,6 +363,7 @@
             </span>
           </a>
         </div>
+      </div>
         <div id="contactFormSuccess" class="contact-form-success" hidden>
           <h2>Obrigado por confiar na Chácara do Cris!</h2>
           <p class="contact-form-success-lead">
@@ -364,13 +407,17 @@
         </a>
       </div>
     </div>
+    <div class="container footer-credit">
+      <p>Site desenvolvido por <strong>DAAT MÍDIA</strong></p>
+      <a href="https://daatmidia.com.br" target="_blank" rel="noopener noreferrer">daatmidia.com.br</a>
+    </div>
   </footer>
 
   <a class="whatsapp-float" href="https://wa.me/5549998009688?text=Olá!%20Quero%20agendar%20uma%20visita%20ao%20Chácara%20do%20Cris." target="_blank" rel="noopener noreferrer" aria-label="Falar no WhatsApp">
     <img class="whatsapp-float-icon" src="../assets/whatsapp-icon.png" width="140" height="130" alt="" decoding="async">
   </a>
 
-  <script src="../js/main.js"></script>
+  <script src="../js/main.js?v=20260724x"></script>
   <script src="../js/cerimonia-galerias.js"></script>
 </body>
 </html>
