@@ -63,13 +63,18 @@ const cerimoniaGalleryTriggers = document.querySelectorAll(".photo-gallery-trigg
 
 if (cerimoniaGalleryTriggers.length > 0) {
   document.querySelectorAll(".cerimonia-gallery-panel").forEach((panel) => {
+    const hasCarousel = panel.querySelector("[data-about-carousel]");
     const expandedGrid = panel.querySelector(".gallery-grid--deck-expanded");
 
-    if (expandedGrid && !panel.querySelector(".gallery-scroll-hint")) {
+    if ((hasCarousel || expandedGrid) && !panel.querySelector(".gallery-scroll-hint") && !panel.querySelector(".about-carousel-hint")) {
       const hint = document.createElement("p");
-      hint.className = "gallery-scroll-hint";
-      hint.textContent = "Deslize para o lado para ver todas as fotos →";
-      panel.querySelector(".cerimonia-gallery-panel-title")?.insertAdjacentElement("afterend", hint);
+      hint.className = hasCarousel ? "about-carousel-hint" : "gallery-scroll-hint";
+      hint.textContent = hasCarousel
+        ? "Arraste para os lados ou clique na foto para ampliar."
+        : "Deslize para o lado para ver todas as fotos →";
+      if (!hasCarousel) {
+        panel.querySelector(".cerimonia-gallery-panel-title")?.insertAdjacentElement("afterend", hint);
+      }
     }
 
     if (panel.querySelector(".cerimonia-gallery-panel-close")) {
@@ -84,6 +89,22 @@ if (cerimoniaGalleryTriggers.length > 0) {
     panel.prepend(closeButton);
   });
 
+  const syncPanelCarousels = (activePanel = null) => {
+    document.querySelectorAll(".cerimonia-gallery-panel [data-about-carousel]").forEach((viewport) => {
+      const api = viewport.__aboutCarousel;
+      if (!api) {
+        return;
+      }
+
+      const panel = viewport.closest(".cerimonia-gallery-panel");
+      if (panel && activePanel === panel) {
+        requestAnimationFrame(() => api.resume());
+      } else {
+        api.pause();
+      }
+    });
+  };
+
   const closeCerimoniaPanels = () => {
     document.querySelectorAll(".cerimonia-gallery-panel").forEach((panel) => {
       panel.hidden = true;
@@ -92,6 +113,7 @@ if (cerimoniaGalleryTriggers.length > 0) {
       trigger.classList.remove("is-active");
       trigger.setAttribute("aria-expanded", "false");
     });
+    syncPanelCarousels(null);
   };
 
   document.querySelectorAll(".cerimonia-gallery-panel-close").forEach((closeButton) => {
@@ -119,6 +141,7 @@ if (cerimoniaGalleryTriggers.length > 0) {
       trigger.classList.add("is-active");
       trigger.setAttribute("aria-expanded", "true");
       panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      syncPanelCarousels(panel);
     }
   };
 

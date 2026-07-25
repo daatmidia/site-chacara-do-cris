@@ -3860,6 +3860,25 @@ textarea:focus {
   display: block;
 }
 
+.cerimonia-gallery-panel .about-carousel-viewport {
+  width: 100%;
+  margin-top: 0.35rem;
+  padding: 0.35rem 0 0.75rem;
+}
+
+.cerimonia-gallery-panel .about-carousel-track {
+  padding-inline: 0;
+}
+
+.cerimonia-gallery-panel .about-carousel-card {
+  flex-basis: clamp(230px, 28vw, 380px);
+}
+
+.cerimonia-gallery-panel .about-carousel-hint {
+  margin-top: 0.15rem;
+  padding-inline: 0;
+}
+
 .cerimonia-gallery-panel-close {
   position: absolute;
   top: 0.35rem;

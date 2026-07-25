@@ -631,7 +631,7 @@ const initAboutCarousel = (viewport) => {
   let lastTime = 0;
   let velocity = 0;
   let resumeTimeout = 0;
-  let autoplayPaused = prefersReducedMotion;
+  let autoplayPaused = prefersReducedMotion || Boolean(viewport.closest("[hidden]"));
   let pointerId = null;
   let pointerDownCard = null;
   const autoSpeed = 0.75;
@@ -833,7 +833,9 @@ const initAboutCarousel = (viewport) => {
   });
 
   const tick = () => {
-    if (!autoplayPaused && !isDragging) {
+    const isVisible = !viewport.closest("[hidden]") && viewport.offsetParent !== null;
+
+    if (!autoplayPaused && !isDragging && isVisible && loopWidth > 0) {
       offset -= autoSpeed;
       normalizeOffset();
       render();
@@ -869,21 +871,36 @@ const initAboutCarousel = (viewport) => {
     { passive: false }
   );
 
+  const remount = () => {
+    measureLoopWidth();
+    normalizeOffset();
+    render();
+  };
+
+  viewport.__aboutCarousel = {
+    remount,
+    resume: () => {
+      remount();
+      if (!prefersReducedMotion) {
+        autoplayPaused = false;
+      }
+    },
+    pause: () => {
+      autoplayPaused = true;
+    }
+  };
+
   window.addEventListener(
     "resize",
     () => {
-      measureLoopWidth();
-      normalizeOffset();
-      render();
+      remount();
     },
     { passive: true }
   );
 
   // Wait a frame so layout/images settle before measuring.
   requestAnimationFrame(() => {
-    measureLoopWidth();
-    normalizeOffset();
-    render();
+    remount();
 
     if (!prefersReducedMotion) {
       requestAnimationFrame(tick);
@@ -899,9 +916,7 @@ const initAboutCarousel = (viewport) => {
     img.addEventListener(
       "load",
       () => {
-        measureLoopWidth();
-        normalizeOffset();
-        render();
+        remount();
       },
       { once: true }
     );
