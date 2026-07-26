@@ -2081,61 +2081,37 @@ cite {
   min-width: 0;
 }
 
-.date-field-input {
+.date-field-input,
+.quote-form input.date-field-input[type="date"],
+.quote-form input.date-field-input[type="text"] {
+  display: block;
   width: 100%;
+  max-width: 100%;
   min-width: 0;
+  height: 3.05rem;
+  max-height: 3.05rem;
+  min-height: 3.05rem;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
   color: #24211e;
 }
 
-.date-field-input:required:invalid {
-  color: transparent;
+.quote-form input.date-field-input[type="date"]::-webkit-calendar-picker-indicator {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  opacity: 0.55;
+  cursor: pointer;
 }
 
-.date-field-input:required:invalid::-webkit-datetime-edit,
-.date-field-input:required:invalid::-webkit-datetime-edit-fields-wrapper,
-.date-field-input:required:invalid::-webkit-datetime-edit-text,
-.date-field-input:required:invalid::-webkit-datetime-edit-month-field,
-.date-field-input:required:invalid::-webkit-datetime-edit-day-field,
-.date-field-input:required:invalid::-webkit-datetime-edit-year-field {
-  color: transparent;
+.quote-form input.date-field-input[type="date"]::-webkit-date-and-time-value {
+  text-align: left;
 }
 
-.date-field-input:focus,
-.date-field-input:valid {
-  color: #24211e;
-}
-
-.date-field-input:focus::-webkit-datetime-edit,
-.date-field-input:valid::-webkit-datetime-edit,
-.date-field-input:focus::-webkit-datetime-edit-fields-wrapper,
-.date-field-input:valid::-webkit-datetime-edit-fields-wrapper,
-.date-field-input:focus::-webkit-datetime-edit-text,
-.date-field-input:valid::-webkit-datetime-edit-text,
-.date-field-input:focus::-webkit-datetime-edit-month-field,
-.date-field-input:valid::-webkit-datetime-edit-month-field,
-.date-field-input:focus::-webkit-datetime-edit-day-field,
-.date-field-input:valid::-webkit-datetime-edit-day-field,
-.date-field-input:focus::-webkit-datetime-edit-year-field,
-.date-field-input:valid::-webkit-datetime-edit-year-field {
-  color: #24211e;
-}
-
-.date-field-placeholder {
-  position: absolute;
-  left: 0.95rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #7a746c;
-  font-size: 0.92rem;
-  line-height: 1.35;
-  pointer-events: none;
-  white-space: nowrap;
-}
-
-.date-field:has(.date-field-input:focus) .date-field-placeholder,
-.date-field:has(.date-field-input:valid) .date-field-placeholder {
-  opacity: 0;
-  visibility: hidden;
+.quote-form input.date-field-input[type="date"]::-webkit-datetime-edit {
+  padding: 0;
+  margin: 0;
 }
 
 .btn-quote-submit {
@@ -2199,6 +2175,23 @@ cite {
 
   .form-row-2 {
     grid-template-columns: 1fr;
+  }
+
+  .quote-form input,
+  .quote-form select,
+  .quote-form .date-field-input,
+  .quote-form .date-field {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .quote-form input,
+  .quote-form select,
+  .quote-form .date-field-input {
+    height: 3.05rem;
+    max-height: 3.05rem;
+    min-height: 3.05rem;
   }
 
   .quote-extras {

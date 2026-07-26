@@ -42,8 +42,17 @@
               <div class="form-row form-row-2">
                 <div class="date-field">
                   <label class="sr-only" for="data">Data desejada</label>
-                  <input id="data" name="data" type="date" required aria-label="Data desejada" class="date-field-input">
-                  <span class="date-field-placeholder" aria-hidden="true">Data desejada</span>
+                  <input
+                    id="data"
+                    name="data"
+                    class="date-field-input"
+                    type="text"
+                    inputmode="numeric"
+                    placeholder="Data desejada"
+                    required
+                    aria-label="Data desejada"
+                    autocomplete="off"
+                  >
                 </div>
                 <div>
                   <label class="sr-only" for="convidados">Número de convidados</label>

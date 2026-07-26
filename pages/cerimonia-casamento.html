@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/styles.css?v=20260724a5">
+  <link rel="stylesheet" href="../css/styles.css?v=20260724a6">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -329,8 +329,17 @@
               <div class="form-row form-row-2">
                 <div class="date-field">
                   <label class="sr-only" for="data">Data desejada</label>
-                  <input id="data" name="data" type="date" required aria-label="Data desejada" class="date-field-input">
-                  <span class="date-field-placeholder" aria-hidden="true">Data desejada</span>
+                  <input
+                    id="data"
+                    name="data"
+                    class="date-field-input"
+                    type="text"
+                    inputmode="numeric"
+                    placeholder="Data desejada"
+                    required
+                    aria-label="Data desejada"
+                    autocomplete="off"
+                  >
                 </div>
                 <div>
                   <label class="sr-only" for="convidados">Número de convidados</label>
@@ -389,7 +398,7 @@
     <img class="whatsapp-float-icon" src="../assets/whatsapp-icon.png" width="140" height="130" alt="" decoding="async">
   </a>
 
-  <script src="../js/main.js?v=20260724a4"></script>
+  <script src="../js/main.js?v=20260724a6"></script>
   <script src="../js/cerimonia-galerias.js?v=20260724a4"></script>
 </body>
 </html>

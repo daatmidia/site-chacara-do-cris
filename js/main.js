@@ -254,6 +254,27 @@ if (contactForm) {
   });
 }
 
+document.querySelectorAll(".date-field-input").forEach((input) => {
+  const showDatePicker = () => {
+    if (input.type !== "date") {
+      input.type = "date";
+    }
+  };
+
+  const restorePlaceholder = () => {
+    if (!input.value) {
+      input.type = "text";
+    }
+  };
+
+  input.addEventListener("focus", showDatePicker);
+  input.addEventListener("blur", restorePlaceholder);
+
+  if (input.value) {
+    input.type = "date";
+  }
+});
+
 if (heroSlides.length > 1) {
   let currentSlide = 0;
   let heroTimer;
