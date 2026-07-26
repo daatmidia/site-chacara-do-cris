@@ -2011,12 +2011,21 @@ cite {
 .quote-form input,
 .quote-form select,
 .quote-form textarea {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   border: 1px solid #2f2a24;
   border-radius: 12px;
   background: #eceae6;
   color: #24211e;
   padding: 0.85rem 0.95rem;
   font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.quote-form input,
+.quote-form select {
+  min-height: 3.05rem;
 }
 
 .quote-form input::placeholder,
@@ -2054,10 +2063,79 @@ cite {
 .form-row {
   display: grid;
   gap: 0.75rem;
+  width: 100%;
+}
+
+.form-row > * {
+  min-width: 0;
+  width: 100%;
 }
 
 .form-row-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.date-field {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+.date-field-input {
+  width: 100%;
+  min-width: 0;
+  color: #24211e;
+}
+
+.date-field-input:required:invalid {
+  color: transparent;
+}
+
+.date-field-input:required:invalid::-webkit-datetime-edit,
+.date-field-input:required:invalid::-webkit-datetime-edit-fields-wrapper,
+.date-field-input:required:invalid::-webkit-datetime-edit-text,
+.date-field-input:required:invalid::-webkit-datetime-edit-month-field,
+.date-field-input:required:invalid::-webkit-datetime-edit-day-field,
+.date-field-input:required:invalid::-webkit-datetime-edit-year-field {
+  color: transparent;
+}
+
+.date-field-input:focus,
+.date-field-input:valid {
+  color: #24211e;
+}
+
+.date-field-input:focus::-webkit-datetime-edit,
+.date-field-input:valid::-webkit-datetime-edit,
+.date-field-input:focus::-webkit-datetime-edit-fields-wrapper,
+.date-field-input:valid::-webkit-datetime-edit-fields-wrapper,
+.date-field-input:focus::-webkit-datetime-edit-text,
+.date-field-input:valid::-webkit-datetime-edit-text,
+.date-field-input:focus::-webkit-datetime-edit-month-field,
+.date-field-input:valid::-webkit-datetime-edit-month-field,
+.date-field-input:focus::-webkit-datetime-edit-day-field,
+.date-field-input:valid::-webkit-datetime-edit-day-field,
+.date-field-input:focus::-webkit-datetime-edit-year-field,
+.date-field-input:valid::-webkit-datetime-edit-year-field {
+  color: #24211e;
+}
+
+.date-field-placeholder {
+  position: absolute;
+  left: 0.95rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7a746c;
+  font-size: 0.92rem;
+  line-height: 1.35;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.date-field:has(.date-field-input:focus) .date-field-placeholder,
+.date-field:has(.date-field-input:valid) .date-field-placeholder {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .btn-quote-submit {
